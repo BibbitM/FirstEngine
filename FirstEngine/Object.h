@@ -11,14 +11,18 @@ public:
 	Object();
 	~Object();
 
-	virtual void StartUp( Level* level );
-	virtual void ShutDown();
+	void StartUp( Level* level );
+	void ShutDown();
 	void Destroy();
 
 	virtual void Update( float deltaTime );
 	virtual void Render( FrameRenderer& frame ) const;
 
 	Level* GetLevel() const;
+
+protected:
+	virtual void OnStartUp();
+	virtual void OnShutDown();
 
 private:
 	Level* m_level;
