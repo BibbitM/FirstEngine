@@ -27,6 +27,9 @@
     <Filter Include="Source\Inputs">
       <UniqueIdentifier>{c8ee843c-450c-4598-95c6-12ed4892f921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{d3bff7c6-57c3-4c3a-95e6-fe6651612218}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -76,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

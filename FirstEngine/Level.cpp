@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "CameraManager.h"
+#include "Object.h"
 #include <algorithm>
 #include <cassert>
 
@@ -27,6 +28,8 @@ Level::Level()
 Level::~Level()
 {
 	assert( !m_game );
+	assert( m_objects.empty() );
+	assert( m_registeredObjects.empty() );
 }
 
 void Level::StartUp( Game* game )
@@ -65,6 +68,21 @@ void Level::ShutDown()
 		m_tigerTexture.clear();
 	}
 	// TEMP END
+
+	for( auto it = m_objects.begin(); it != m_objects.end(); ++it )
+	{
+		if( *it )
+		{
+			( *it )->Destroy();
+			*it = nullptr;
+		}
+	}
+	m_objects.clear();
+
+	while( !m_registeredObjects.empty() )
+	{
+		m_registeredObjects.front()->Destroy();
+	}
 
 	m_cameraManager->ShutDown();
 
@@ -117,12 +135,35 @@ void Level::Update( float deltaTime )
 		}
 	}
 	// TEMP END
+
+	// Update objects.
+	for( Object* object : m_objects )
+	{
+		if( object ) //< Object can be destroyed during update.
+			object->Update( deltaTime );
+	}
+
+	// Make sure that new crated objects will be also updated.
+	while( !m_registeredObjects.empty() )
+	{
+		auto firstIt = m_objects.insert( m_objects.end(), m_registeredObjects.begin(), m_registeredObjects.end() );
+		m_registeredObjects.clear();
+
+		// Update new added objects.
+		for( auto it = firstIt; it != m_objects.end(); ++it )
+		{
+			if( *it ) //< Object can be destroyed during update.
+				( *it )->Update( deltaTime );
+		}
+	}
+
+	// Remove all nullptr.
+	m_objects.erase( std::remove( m_objects.begin(), m_objects.end(), nullptr ), m_objects.end() );
 }
 
 void Level::Render( FrameRenderer& frame ) const
 {
 	m_cameraManager->Render();
-
 
 	// TEMP STUFF
 	{
@@ -158,6 +199,43 @@ void Level::Render( FrameRenderer& frame ) const
 		frame.AddMesh( tigerMat, m_tigerMesh, m_tigerTexture, whiteColor );
 	}
 	// TEMP END
+
+	for( Object* object : m_objects )
+	{
+		if( object )
+			object->Render( frame );
+	}
+}
+
+void Level::RegisterObject( Object* object )
+{
+	assert( object );
+	assert( std::find( m_objects.begin(), m_objects.end(), object ) == m_objects.end() );
+	assert( std::find( m_registeredObjects.begin(), m_registeredObjects.end(), object ) == m_registeredObjects.end() );
+
+	m_registeredObjects.push_back( object );
+}
+
+void Level::UnregisterObject( Object* object )
+{
+	assert( object );
+	assert( std::find( m_objects.begin(), m_objects.end(), object ) != m_objects.end() || std::find( m_registeredObjects.begin(), m_registeredObjects.end(), object ) != m_registeredObjects.end() );
+
+	auto objIt = std::find( m_objects.begin(), m_objects.end(), object );
+	if( objIt != m_objects.end() )
+	{
+		*objIt = nullptr;
+	}
+	else
+	{
+		m_registeredObjects.erase( std::find( m_registeredObjects.begin(), m_registeredObjects.end(), object ) );
+	}
+}
+
+void Level::DestroyObject( Object* object )
+{
+	assert( object );
+	object->Destroy();
 }
 
 Game* Level::GetGame() const
