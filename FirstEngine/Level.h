@@ -4,10 +4,6 @@
 #include <memory>
 #include <vector>
 
-// TEMP STUFF
-class Pawn;
-// TEMP END
-
 class CameraManager;
 class FrameRenderer;
 class Game;
@@ -46,11 +42,6 @@ private:
 
 	std::vector< Object* > m_objects;
 	std::vector< Object* > m_registeredObjects;
-
-	// TEMP STUFF
-	Pawn* m_tiger;
-	float m_cameraDistance;
-	// TEMP END
 };
 
 template< class TObject >

@@ -5,21 +5,14 @@
 #include <cassert>
 
 // TEMP STUFF
-#include "FrameRenderer.h"
-#include "Game.h"
-#include "InputManager.h"
-#include "Math.h"
 #include "Pawn.h"
+#include "Tiger.h"
 // TEMP END
 
 
 Level::Level()
 	: m_game( nullptr )
 	, m_cameraManager( std::make_unique< CameraManager >() )
-	// TEMP STUFF
-	, m_tiger( nullptr )
-	, m_cameraDistance( 5.0f )
-// TEMP END
 {
 }
 
@@ -47,12 +40,7 @@ void Level::StartUp( Game* game )
 			floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
 		} );
 
-		m_tiger = CreateObject< Pawn >( []( auto tiger )
-		{
-			tiger->SetMesh( "Content\\tiger.x" );
-			tiger->SetTexture( "Content\\tiger.bmp" );
-			tiger->SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f, 0.0f ) );
-		} );
+		CreateObject< Tiger >();
 	}
 	// TEMP END
 }
@@ -60,13 +48,6 @@ void Level::StartUp( Game* game )
 void Level::ShutDown()
 {
 	assert( m_game );
-
-	// TEMP STUFF
-	{
-		m_tiger->Destroy();
-		m_tiger = nullptr;
-	}
-	// TEMP END
 
 	for( auto it = m_objects.begin(); it != m_objects.end(); ++it )
 	{
@@ -90,54 +71,6 @@ void Level::ShutDown()
 
 void Level::Update( float deltaTime )
 {
-	// TEMP STUFF
-	{
-		const InputManager* inputs = GetGame()->GetInputManager();
-
-		{
-			float tigerRotChange = 0;
-			if( inputs->IsKeyPressed( 'A' ) )
-			{
-				tigerRotChange -= 1.0f;
-			}
-			if( inputs->IsKeyPressed( 'D' ) )
-			{
-				tigerRotChange += 1.0f;
-			}
-
-			static const float tigerRotChangeSpeed = Math::Deg2Rad( 90.0f );
-
-			D3DXVECTOR3 tigerRotation = m_tiger->GetActorRotation();
-			tigerRotation.y += tigerRotChange * tigerRotChangeSpeed * deltaTime;
-			m_tiger->SetActorRotation( tigerRotation );
-		}
-
-		{
-			float camDistChange = 0.0f;
-			if( inputs->IsKeyPressed( VK_UP ) )
-			{
-				camDistChange -= 1.0f;
-			}
-			if( inputs->IsKeyPressed( VK_DOWN ) )
-			{
-				camDistChange += 1.0f;
-			}
-
-			static const float camDistChangeSpeed = 5.0f;
-			static const float camDistMin = 1.0f;
-			static const float camDistMax = 10.0f;
-
-			m_cameraDistance += camDistChange * camDistChangeSpeed * deltaTime;
-			m_cameraDistance = Math::Clamp( m_cameraDistance, camDistMin, camDistMax );
-
-			D3DXVECTOR3 camDir = m_cameraManager->GetDirection();
-			D3DXVECTOR3 camPos = m_tiger->GetActorPosition() - camDir * m_cameraDistance;
-			camPos.y += 0.75f;
-			m_cameraManager->SetPositionDirection( camPos, camDir );
-		}
-	}
-	// TEMP END
-
 	// Update objects.
 	for( Object* object : m_objects )
 	{

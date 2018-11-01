@@ -92,6 +92,12 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiger.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -190,6 +196,12 @@
       <Filter>Source\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiger.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
