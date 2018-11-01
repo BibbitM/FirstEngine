@@ -93,9 +93,9 @@ void Pawn::OnShutDown()
 	Actor::OnShutDown();
 }
 
-void Pawn::Render( FrameRenderer& frame ) const
+void Pawn::OnRender( FrameRenderer& frame ) const
 {
-	Actor::Render( frame );
+	Actor::OnRender( frame );
 
 	if( m_mesh )
 	{

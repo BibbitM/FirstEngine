@@ -13,7 +13,7 @@ public:
 	void SetVelocity( const D3DXVECTOR3& velocity ) { m_velocity = velocity; }
 
 protected:
-	virtual void Update( float deltaTime ) override;
+	virtual void OnUpdate( float deltaTime ) override;
 
 private:
 	D3DXVECTOR3 m_velocity;

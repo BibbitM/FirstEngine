@@ -41,14 +41,16 @@ void Object::Destroy()
 	delete this;
 }
 
-void Object::Update( float /*deltaTime*/ )
+void Object::Update( float deltaTime )
 {
-	// Default do nothing.
+	assert( IsInitialized() );
+	OnUpdate( deltaTime );
 }
 
-void Object::Render( FrameRenderer& /*frame*/ ) const
+void Object::Render( FrameRenderer& frame ) const
 {
-	// Default do not render.
+	assert( IsInitialized() );
+	OnRender( frame );
 }
 
 Level* Object::GetLevel() const
@@ -65,4 +67,14 @@ void Object::OnStartUp()
 void Object::OnShutDown()
 {
 	// Uninitialize resources in sub-classes.
+}
+
+void Object::OnUpdate( float /*deltaTime*/ )
+{
+	// Default do nothing.
+}
+
+void Object::OnRender( FrameRenderer& /*frame*/ ) const
+{
+	// Default do not render.
 }

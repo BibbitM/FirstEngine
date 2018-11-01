@@ -7,9 +7,9 @@ Character::Character( const D3DXVECTOR3& velocity )
 
 Character::~Character() = default;
 
-void Character::Update( float deltaTime )
+void Character::OnUpdate( float deltaTime )
 {
-	Pawn::Update( deltaTime );
+	Pawn::OnUpdate( deltaTime );
 
 	D3DXVECTOR3 position = GetActorPosition();
 	position += m_velocity * deltaTime;

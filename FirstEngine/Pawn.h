@@ -43,7 +43,7 @@ protected:
 	virtual void OnStartUp() override;
 	virtual void OnShutDown() override;
 
-	virtual void Render( FrameRenderer& frame ) const override;
+	virtual void OnRender( FrameRenderer& frame ) const override;
 
 private:
 	void LoadMesh();
