@@ -14,7 +14,6 @@ Pawn::Pawn( const std::string& meshName, const std::string& textureName, const D
 	, m_meshPosition( position )
 	, m_meshRotation( rotation )
 	, m_meshScale( scale )
-
 {
 }
 
