@@ -89,6 +89,9 @@
     <ClCompile Include="Pawn.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -184,6 +187,9 @@
       <Filter>Source\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Pawn.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
