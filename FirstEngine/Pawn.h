@@ -19,8 +19,8 @@ public:
 	const std::string& GetMeshName() const { return m_meshName; }
 	const std::string& GetTextureName() const { return m_textureName; }
 
-	void SetMeshName( const std::string& meshName );
-	void SetTextureName( const std::string& textureName );
+	void SetMesh( const std::string& meshName );
+	void SetTexture( const std::string& textureName );
 
 
 	void SetColor( const D3DXCOLOR& color ) { m_color = color; }

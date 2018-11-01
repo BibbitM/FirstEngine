@@ -23,7 +23,7 @@ Pawn::~Pawn()
 	assert( !m_texture );
 }
 
-void Pawn::SetMeshName( const std::string& meshName )
+void Pawn::SetMesh( const std::string& meshName )
 {
 	if( m_meshName == meshName )
 	{
@@ -45,7 +45,7 @@ void Pawn::SetMeshName( const std::string& meshName )
 	}
 }
 
-void Pawn::SetTextureName( const std::string& textureName )
+void Pawn::SetTexture( const std::string& textureName )
 {
 	if( m_textureName == textureName )
 	{
