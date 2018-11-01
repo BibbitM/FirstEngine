@@ -83,6 +83,9 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -172,6 +175,9 @@
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
+      <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>

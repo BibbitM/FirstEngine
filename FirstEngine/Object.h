@@ -9,7 +9,7 @@ class Object : public NonCopyable
 {
 public:
 	Object();
-	~Object();
+	virtual ~Object();
 
 	void StartUp( Level* level );
 	void ShutDown();

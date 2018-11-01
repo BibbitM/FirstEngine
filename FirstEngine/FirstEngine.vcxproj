@@ -167,6 +167,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FrameRenderer.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -189,6 +190,7 @@
     <Image Include="PlayGames.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="FrameRenderer.h" />
     <ClInclude Include="Object.h" />
