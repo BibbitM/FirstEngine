@@ -9,15 +9,15 @@ public:
 	Actor( const D3DXVECTOR3& position = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), const D3DXVECTOR3& rotation = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), const D3DXVECTOR3& scale = D3DXVECTOR3( 1.0f, 1.0f, 1.0f ) );
 	~Actor();
 
-	const D3DXVECTOR3& GetPosition() const { return m_position; }
-	const D3DXVECTOR3& GetRotation() const { return m_rotation; }
-	const D3DXVECTOR3& GetScale() const { return m_scale; }
+	const D3DXVECTOR3& GetActorPosition() const { return m_position; }
+	const D3DXVECTOR3& GetActorRotation() const { return m_rotation; }
+	const D3DXVECTOR3& GetActorScale() const { return m_scale; }
 
-	D3DXMATRIX GetWorldMatrix() const;
+	D3DXMATRIX GetActorWorldMatrix() const;
 
-	void SetPosition( const D3DXVECTOR3& position ) { m_position = position; }
-	void SetRotation( const D3DXVECTOR3& rotation ) { m_rotation = rotation; }
-	void SetScale( const D3DXVECTOR3& scale ) { m_scale = scale; }
+	void SetActorPosition( const D3DXVECTOR3& position ) { m_position = position; }
+	void SetActorRotation( const D3DXVECTOR3& rotation ) { m_rotation = rotation; }
+	void SetActorScale( const D3DXVECTOR3& scale ) { m_scale = scale; }
 
 private:
 	D3DXVECTOR3 m_position;

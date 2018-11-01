@@ -11,6 +11,8 @@ public:
 	Object();
 	virtual ~Object();
 
+	bool IsInitialized() const { return GetLevel() != nullptr; }
+
 	void StartUp( Level* level );
 	void ShutDown();
 	void Destroy();

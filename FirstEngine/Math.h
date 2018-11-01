@@ -1,5 +1,8 @@
 #pragma once
 
+struct D3DXMATRIX;
+struct D3DXVECTOR3;
+
 namespace Math
 {
 	float Rad2Deg( float rad );
@@ -10,4 +13,6 @@ namespace Math
 	{
 		return ( max < val ) ? max : ( val < min ) ? min : val;
 	}
+
+	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 }
