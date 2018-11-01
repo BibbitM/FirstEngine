@@ -7,13 +7,13 @@
 #include "TextureManager.h"
 #include <cassert>
 
-Pawn::Pawn( const std::string& meshName, const std::string& textureName, const D3DXCOLOR& color, const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale )
-	: m_meshName( meshName )
-	, m_textureName( textureName )
-	, m_color( color )
-	, m_meshPosition( position )
-	, m_meshRotation( rotation )
-	, m_meshScale( scale )
+Pawn::Pawn()
+	: m_meshName()
+	, m_textureName()
+	, m_color( 0xFFFFFFFF )
+	, m_meshPosition( 0.0f, 0.0f, 0.0f )
+	, m_meshRotation( 0.0f, 0.0f, 0.0f )
+	, m_meshScale( 1.0f, 1.0f, 1.0f )
 {
 }
 

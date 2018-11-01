@@ -11,7 +11,7 @@ public:
 	Object();
 	virtual ~Object();
 
-	bool IsInitialized() const { return GetLevel() != nullptr; }
+	bool IsInitialized() const { return m_level != nullptr; }
 
 	void StartUp( Level* level );
 	void ShutDown();

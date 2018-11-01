@@ -1,10 +1,10 @@
 #include "Actor.h"
 #include "Math.h"
 
-Actor::Actor( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale )
-	: m_position( position )
-	, m_rotation( rotation )
-	, m_scale( scale )
+Actor::Actor()
+	: m_position( 0.0f, 0.0f, 0.0f )
+	, m_rotation( 0.0f, 0.0f, 0.0f )
+	, m_scale( 1.0f, 1.0f, 1.0f )
 {
 }
 

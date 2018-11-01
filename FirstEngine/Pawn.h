@@ -8,12 +8,7 @@
 class Pawn : public Actor
 {
 public:
-	Pawn( const std::string& meshName = std::string(),
-		  const std::string& textureName = std::string(),
-		  const D3DXCOLOR& color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-		  const D3DXVECTOR3& position = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ),
-		  const D3DXVECTOR3& rotation = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ),
-		  const D3DXVECTOR3& scale = D3DXVECTOR3( 1.0f, 1.0f, 1.0f ) );
+	Pawn();
 	~Pawn();
 
 	const std::string& GetMeshName() const { return m_meshName; }

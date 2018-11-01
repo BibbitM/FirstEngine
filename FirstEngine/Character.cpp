@@ -1,7 +1,7 @@
 #include "Character.h"
 
-Character::Character( const D3DXVECTOR3& velocity )
-	: m_velocity(velocity)
+Character::Character()
+	: m_velocity( 0.0f, 0.0f, 0.0f )
 {
 }
 

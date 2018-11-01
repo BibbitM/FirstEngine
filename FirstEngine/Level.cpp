@@ -40,11 +40,19 @@ void Level::StartUp( Game* game )
 
 	// TEMP STUFF
 	{
-		Pawn* floor = CreateObject< Pawn >( "Content\\plane.x", "Content\\lava.jpg" );
-		floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
+		CreateObject< Pawn >( []( auto floor )
+		{
+			floor->SetMesh( "Content\\plane.x" );
+			floor->SetTexture( "Content\\lava.jpg" );
+			floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
+		} );
 
-		m_tiger = CreateObject< Pawn >( "Content\\tiger.x", "Content\\tiger.bmp" );
-		m_tiger->SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f, 0.0f ) );
+		m_tiger = CreateObject< Pawn >( []( auto tiger )
+		{
+			tiger->SetMesh( "Content\\tiger.x" );
+			tiger->SetTexture( "Content\\tiger.bmp" );
+			tiger->SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f, 0.0f ) );
+		} );
 	}
 	// TEMP END
 }

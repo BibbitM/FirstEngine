@@ -5,7 +5,7 @@
 class Character : public Pawn
 {
 public:
-	Character( const D3DXVECTOR3& velocity = D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
+	Character();
 	~Character();
 
 	const D3DXVECTOR3& GetVelocity() const { return m_velocity; }

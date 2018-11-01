@@ -19,18 +19,20 @@ public:
 	Level();
 	~Level();
 
-	void StartUp(Game* game);
+	void StartUp( Game* game );
 	void ShutDown();
 
-	void Update(float deltaTime);
+	void Update( float deltaTime );
 	void Render( FrameRenderer& frame ) const;
 
 
 	void RegisterObject( Object* object );
 	void UnregisterObject( Object* object );
 
-	template< class TObject, typename... TArgs >
-	TObject* CreateObject( TArgs&&... args );
+	template< class TObject >
+	TObject* CreateObject();
+	template< class TObject, typename TInitFunc >
+	TObject* CreateObject( TInitFunc initFunc );
 	void DestroyObject( Object* object );
 
 
@@ -40,7 +42,7 @@ public:
 private:
 	Game* m_game;
 
-	std::unique_ptr<CameraManager> m_cameraManager;
+	std::unique_ptr< CameraManager > m_cameraManager;
 
 	std::vector< Object* > m_objects;
 	std::vector< Object* > m_registeredObjects;
@@ -51,10 +53,19 @@ private:
 	// TEMP END
 };
 
-template< class TObject, typename... TArgs >
-TObject* Level::CreateObject( TArgs&&... args )
+template< class TObject >
+TObject* Level::CreateObject()
 {
-	TObject* object = new TObject( std::forward< TArgs >( args )... );
+	TObject* object = new TObject();
+	object->StartUp( this );
+	return object;
+}
+
+template< class TObject, typename TInitFunc >
+TObject* Level::CreateObject( TInitFunc initFunc )
+{
+	TObject* object = new TObject();
+	initFunc( object );
 	object->StartUp( this );
 	return object;
 }
