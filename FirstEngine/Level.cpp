@@ -9,8 +9,7 @@
 #include "Game.h"
 #include "InputManager.h"
 #include "Math.h"
-#include "MeshManager.h"
-#include "TextureManager.h"
+#include "Pawn.h"
 // TEMP END
 
 
@@ -18,10 +17,9 @@ Level::Level()
 	: m_game( nullptr )
 	, m_cameraManager( std::make_unique< CameraManager >() )
 	// TEMP STUFF
-	, m_tigerPosition( 0.0f, 0.75f, 0.0f )
-	, m_tigerAngle( 0.0f )
+	, m_tiger( nullptr )
 	, m_cameraDistance( 5.0f )
-	// TEMP END
+// TEMP END
 {
 }
 
@@ -42,11 +40,11 @@ void Level::StartUp( Game* game )
 
 	// TEMP STUFF
 	{
-		m_planeMesh = GetGame()->GetMeshManager()->LoadMesh( "Content\\plane.x" );
-		m_tigerMesh = GetGame()->GetMeshManager()->LoadMesh( "Content\\tiger.x" );
+		Pawn* floor = CreateObject< Pawn >( "Content\\plane.x", "Content\\lava.jpg" );
+		floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
 
-		m_lavaTexture = GetGame()->GetTextureManager()->LoadTexture( "Content\\lava.jpg" );
-		m_tigerTexture = GetGame()->GetTextureManager()->LoadTexture( "Content\\tiger.bmp" );
+		m_tiger = CreateObject< Pawn >( "Content\\tiger.x", "Content\\tiger.bmp" );
+		m_tiger->SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f, 0.0f ) );
 	}
 	// TEMP END
 }
@@ -57,15 +55,8 @@ void Level::ShutDown()
 
 	// TEMP STUFF
 	{
-		GetGame()->GetMeshManager()->UnloadMesh( m_planeMesh );
-		m_planeMesh.clear();
-		GetGame()->GetMeshManager()->UnloadMesh( m_tigerMesh );
-		m_tigerMesh.clear();
-
-		GetGame()->GetTextureManager()->UnloadTexture( m_lavaTexture );
-		m_lavaTexture.clear();
-		GetGame()->GetTextureManager()->UnloadTexture( m_tigerTexture );
-		m_tigerTexture.clear();
+		m_tiger->Destroy();
+		m_tiger = nullptr;
 	}
 	// TEMP END
 
@@ -106,9 +97,11 @@ void Level::Update( float deltaTime )
 				tigerRotChange += 1.0f;
 			}
 
-			static const float tigerRotChangeSpeed = 90.0f;
+			static const float tigerRotChangeSpeed = Math::Deg2Rad( 90.0f );
 
-			m_tigerAngle += tigerRotChange * tigerRotChangeSpeed * deltaTime;
+			D3DXVECTOR3 tigerRotation = m_tiger->GetActorRotation();
+			tigerRotation.y += tigerRotChange * tigerRotChangeSpeed * deltaTime;
+			m_tiger->SetActorRotation( tigerRotation );
 		}
 
 		{
@@ -130,7 +123,8 @@ void Level::Update( float deltaTime )
 			m_cameraDistance = Math::Clamp( m_cameraDistance, camDistMin, camDistMax );
 
 			D3DXVECTOR3 camDir = m_cameraManager->GetDirection();
-			D3DXVECTOR3 camPos = m_tigerPosition - camDir * m_cameraDistance;
+			D3DXVECTOR3 camPos = m_tiger->GetActorPosition() - camDir * m_cameraDistance;
+			camPos.y += 0.75f;
 			m_cameraManager->SetPositionDirection( camPos, camDir );
 		}
 	}
@@ -164,41 +158,6 @@ void Level::Update( float deltaTime )
 void Level::Render( FrameRenderer& frame ) const
 {
 	m_cameraManager->Render();
-
-	// TEMP STUFF
-	{
-		/*
-		D3DXMATRIX matRotX, matRotY, matRotZ, matTrans;
-
-		// Calculate rotation matrix
-		D3DXMatrixRotationX( &matRotX, rot.x ); // Pitch
-		D3DXMatrixRotationY( &matRotY, rot.y ); // Yaw
-		D3DXMatrixRotationZ( &matRotZ, rot.z ); // Roll
-
-		// Calculate a translation matrix
-		D3DXMatrixTranslation( &matTrans, m_position.x, m_position.y, m_position.z );
-
-		// Calculate our world matrix by multiplying the above (in the correct order)
-		D3DXMATRIX matWorld = ( matRotX * matRotY * matRotZ ) * matTrans;
-		*/
-
-		static const D3DCOLOR whiteColor = 0xFFFFFFFF;
-
-		D3DXVECTOR3 floorScale( 10.0f, 1.0f, 10.0f );
-		D3DXMATRIX floorMat;
-		D3DXMatrixScaling( &floorMat, floorScale.x, floorScale.y, floorScale.z );
-
-		frame.AddMesh( floorMat, m_planeMesh, m_lavaTexture, whiteColor );
-
-
-		D3DXMATRIX tigerRotMat, tigerTransMat;
-		D3DXMatrixRotationY( &tigerRotMat, Math::Deg2Rad( m_tigerAngle ) );
-		D3DXMatrixTranslation( &tigerTransMat, m_tigerPosition.x, m_tigerPosition.y, m_tigerPosition.z );
-		D3DXMATRIX tigerMat = tigerRotMat * tigerTransMat;
-
-		frame.AddMesh( tigerMat, m_tigerMesh, m_tigerTexture, whiteColor );
-	}
-	// TEMP END
 
 	for( Object* object : m_objects )
 	{

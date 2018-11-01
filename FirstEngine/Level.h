@@ -5,9 +5,7 @@
 #include <vector>
 
 // TEMP STUFF
-#include "Mesh.h"
-#include "Texture.h"
-#include <d3dx9math.h>
+class Pawn;
 // TEMP END
 
 class CameraManager;
@@ -48,13 +46,7 @@ private:
 	std::vector< Object* > m_registeredObjects;
 
 	// TEMP STUFF
-	Mesh m_planeMesh;
-	Mesh m_tigerMesh;
-	Texture m_lavaTexture;
-	Texture m_tigerTexture;
-
-	D3DXVECTOR3 m_tigerPosition;
-	float m_tigerAngle;
+	Pawn* m_tiger;
 	float m_cameraDistance;
 	// TEMP END
 };
