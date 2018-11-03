@@ -8,6 +8,8 @@ InputManager::InputManager()
 	, m_prevMousePosY( 0 )
 	, m_mouseMoveX( 0 )
 	, m_mouseMoveY( 0 )
+	, m_mouseWheel( 0 )
+	, m_mouseWheelAccumulator( 0 )
 {
 	memset( m_keyStates, 0, sizeof( m_keyStates ) );
 }
@@ -61,6 +63,10 @@ void InputManager::UpdateMouse()
 
 	m_prevMousePosX = m_mousePosX;
 	m_prevMousePosY = m_mousePosY;
+
+
+	m_mouseWheel = m_mouseWheelAccumulator;
+	m_mouseWheelAccumulator = 0;
 }
 
 byte InputManager::GetKeyState( int keyCode ) const
@@ -111,6 +117,11 @@ int InputManager::GetMouseMoveY() const
 	return m_mouseMoveY;
 }
 
+int InputManager::GetMouseWheel() const
+{
+	return m_mouseWheel;
+}
+
 void InputManager::OnKeyPressed( int keyCode )
 {
 	if( !IsValidKey( keyCode ) )
@@ -132,6 +143,11 @@ void InputManager::OnMouseMove( int mouseX, int mouseY )
 	m_mousePosY = mouseY;
 
 	m_wasMouseMove = true;
+}
+
+void InputManager::OnMouseWheel( int mouseWheelDelta )
+{
+	m_mouseWheelAccumulator += mouseWheelDelta;
 }
 
 void InputManager::OnMouseLost()

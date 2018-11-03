@@ -32,11 +32,14 @@ public:
 	int GetMouseMoveX() const;
 	int GetMouseMoveY() const;
 
+	int GetMouseWheel() const;
+
 
 	void OnKeyPressed( int keyCode );
 	void OnKeyReleased( int keyCode );
 
 	void OnMouseMove( int mouseX, int mouseY );
+	void OnMouseWheel( int mouseWheelDelta );
 
 	void OnMouseLost();
 
@@ -61,4 +64,7 @@ private:
 
 	int m_mouseMoveX;
 	int m_mouseMoveY;
+
+	int m_mouseWheel;
+	int m_mouseWheelAccumulator;
 };

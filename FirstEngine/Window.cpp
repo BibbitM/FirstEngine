@@ -137,7 +137,10 @@ LRESULT CALLBACK Window::StaticWindowProc( HWND hWnd, UINT message, WPARAM wPara
 LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam )
 {
 	// Consolidate the keyboard messages and pass them to the app's keyboard callback
-	if( message == WM_KEYDOWN || message == WM_SYSKEYDOWN || message == WM_KEYUP || message == WM_SYSKEYUP )
+	if( message == WM_KEYDOWN ||
+		message == WM_SYSKEYDOWN ||
+		message == WM_KEYUP ||
+		message == WM_SYSKEYUP )
 	{
 		if( m_inputListener )
 		{
@@ -149,12 +152,43 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 	}
 
 	// Consolidate the mouse button messages and pass them to the app's mouse callback
-	if( message == WM_LBUTTONDOWN || message == WM_LBUTTONUP || message == WM_LBUTTONDBLCLK || message == WM_MBUTTONDOWN || message == WM_MBUTTONUP || message == WM_MBUTTONDBLCLK || message == WM_RBUTTONDOWN || message == WM_RBUTTONUP || message == WM_RBUTTONDBLCLK || message == WM_XBUTTONDOWN || message == WM_XBUTTONUP || message == WM_XBUTTONDBLCLK || message == WM_MOUSEWHEEL || message == WM_MOUSEMOVE )
+	if( message == WM_LBUTTONDOWN ||
+		message == WM_LBUTTONUP ||
+		message == WM_LBUTTONDBLCLK ||
+		message == WM_MBUTTONDOWN ||
+		message == WM_MBUTTONUP ||
+		message == WM_MBUTTONDBLCLK ||
+		message == WM_RBUTTONDOWN ||
+		message == WM_RBUTTONUP ||
+		message == WM_RBUTTONDBLCLK ||
+		message == WM_XBUTTONDOWN ||
+		message == WM_XBUTTONUP ||
+		message == WM_XBUTTONDBLCLK ||
+		message == WM_MOUSEWHEEL ||
+		message == WM_MOUSEMOVE )
 	{
 		if( m_inputListener )
 		{
-			int posX = (short)LOWORD( lParam );
-			int posY = (short)HIWORD( lParam );
+			int posX = ( short )LOWORD( lParam );
+			int posY = ( short )HIWORD( lParam );
+
+			if( message == WM_MOUSEWHEEL )
+			{
+				// WM_MOUSEWHEEL passes screen mouse coords
+				// so convert them to client coords
+				POINT pt;
+				pt.x = posX;
+				pt.y = posY;
+				ScreenToClient( m_hWnd, &pt );
+				posX = pt.x;
+				posY = pt.y;
+			}
+
+			int mouseWheelDelta = 0;
+			if( message == WM_MOUSEWHEEL )
+			{
+				mouseWheelDelta = ( short )HIWORD( wParam );
+			}
 
 			int nMouseButtonState = LOWORD( wParam );
 			bool leftButton = ( ( nMouseButtonState & MK_LBUTTON ) != 0 );

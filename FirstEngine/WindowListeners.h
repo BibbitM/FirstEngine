@@ -31,6 +31,8 @@ public:
 
 	virtual void OnMouseMove( int mouseX, int mouseY ) = 0;
 
+	virtual void OnMouseWheel( int mouseWheelDelta ) = 0;
+
 protected:
 	virtual ~IWindowInputListener() {}
 };

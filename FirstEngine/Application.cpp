@@ -28,6 +28,10 @@ namespace helper
 		{
 			m_inputManger->OnMouseMove( mouseX, mouseY );
 		}
+		virtual void OnMouseWheel( int mouseWheelDelta ) override
+		{
+			m_inputManger->OnMouseWheel( mouseWheelDelta );
+		}
 
 		void ReleaseAll()
 		{
