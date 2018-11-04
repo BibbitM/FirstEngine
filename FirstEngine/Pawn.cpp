@@ -74,7 +74,7 @@ D3DXMATRIX Pawn::GetMeshLocalMatrix() const
 
 D3DXMATRIX Pawn::GetMeshWorldMatrix() const
 {
-	return GetActorWorldMatrix() * GetMeshLocalMatrix();
+	return GetMeshLocalMatrix() * GetActorWorldMatrix();
 }
 
 void Pawn::OnStartUp()
