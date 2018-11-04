@@ -98,7 +98,7 @@ void Window::RegisterClass()
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = m_hInstance;
 	wcex.hIcon = LoadIcon( m_hInstance, MAKEINTRESOURCE( IDI_PLAYGAMES ) );
-	wcex.hCursor = LoadCursor( m_hInstance, IDC_ARROW );
+	wcex.hCursor = LoadCursor( nullptr, IDC_ARROW );
 	wcex.hbrBackground = nullptr;
 	wcex.lpszMenuName = nullptr;
 	wcex.lpszClassName = s_windowClassName;
