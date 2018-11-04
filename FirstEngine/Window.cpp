@@ -187,7 +187,7 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 			int mouseWheelDelta = 0;
 			if( message == WM_MOUSEWHEEL )
 			{
-				mouseWheelDelta = ( short )HIWORD( wParam );
+				mouseWheelDelta = ( short )HIWORD( wParam ) / WHEEL_DELTA;
 			}
 
 			int nMouseButtonState = LOWORD( wParam );
