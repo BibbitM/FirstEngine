@@ -5,6 +5,8 @@
 #include <cassert>
 
 // TEMP STUFF
+#include "Game.h"
+#include "InputManager.h"
 #include "Pawn.h"
 #include "Tiger.h"
 // TEMP END
@@ -33,6 +35,9 @@ void Level::StartUp( Game* game )
 
 	// TEMP STUFF
 	{
+		GetGame()->GetInputManager()->SetLockCursor( true );
+		GetGame()->GetInputManager()->SetShowCursor( false );
+
 		CreateObject< Pawn >( []( auto floor )
 		{
 			floor->SetMesh( "Content\\plane.x" );
