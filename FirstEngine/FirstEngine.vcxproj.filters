@@ -30,6 +30,9 @@
     <Filter Include="Source\Objects">
       <UniqueIdentifier>{d3bff7c6-57c3-4c3a-95e6-fe6651612218}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Gameplay">
+      <UniqueIdentifier>{25423a4a-d95d-4393-b310-ef24042ca626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -92,11 +95,14 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Tiger.cpp">
-      <Filter>Source\Objects</Filter>
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCameraPoint.cpp">
+      <Filter>Source\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,11 +204,14 @@
     <ClInclude Include="Character.h">
       <Filter>Source\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Tiger.h">
-      <Filter>Source\Objects</Filter>
+      <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCameraPoint.h">
+      <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,7 @@
 #include "Game.h"
 #include "InputManager.h"
 #include "Pawn.h"
+#include "TestCameraPoint.h"
 #include "Tiger.h"
 // TEMP END
 
@@ -35,8 +36,8 @@ void Level::StartUp( Game* game )
 
 	// TEMP STUFF
 	{
-		GetGame()->GetInputManager()->SetLockCursor( true );
-		GetGame()->GetInputManager()->SetShowCursor( false );
+		GetGame()->GetInputManager()->SetLockCursor( false );
+		GetGame()->GetInputManager()->SetShowCursor( true );
 
 		CreateObject< Pawn >( []( auto floor )
 		{
@@ -46,6 +47,8 @@ void Level::StartUp( Game* game )
 		} );
 
 		CreateObject< Tiger >();
+
+		CreateObject< TestCameraPoint >();
 	}
 	// TEMP END
 }
