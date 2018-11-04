@@ -18,6 +18,7 @@ public:
 
 	void Create( const WindowInitContext& initContext );
 	void Show();
+	void Update();
 
 	void SetActiveAppListener( IWindowAcitveAppListener* lisener );
 	void SetInputListener( IWindowInputListener* lisener );
@@ -30,12 +31,24 @@ private:
 	static LRESULT CALLBACK StaticWindowProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 	LRESULT CALLBACK WindowProc( UINT message, WPARAM wParam, LPARAM lParam );
 
+	void UpdateMousePosition( int mousePositionX, int mousePositionY );
+	void ClearMousePosition();
+
+	void UpdateLockCursor();
+	void LockCursor();
+	void UnlockCursor();
+
 	static const wchar_t s_windowClassName[];
 	static const wchar_t s_windowName[];
 
 	HINSTANCE m_hInstance;
 	HWND m_hWnd;
 	int m_cmdShow;
+
+	bool m_isCursorLocked;
+
+	int m_lastMouseX;
+	int m_lastMouseY;
 
 	IWindowAcitveAppListener* m_activeAppListener;
 	IWindowInputListener* m_inputListener;

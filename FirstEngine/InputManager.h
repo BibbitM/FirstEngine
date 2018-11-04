@@ -19,6 +19,12 @@ public:
 
 	void Update();
 
+	void SetLockCursor( bool lockCursor ) { m_lockCursor = lockCursor; }
+	bool GetLockCursor() const { return m_lockCursor; }
+
+	void SetShowCursor( bool showCursor ) { m_showCursor = showCursor; }
+	bool GetShowCursor() const { return m_showCursor; }
+
 	byte GetKeyState( int keyCode ) const;
 
 	bool IsKeyPressed( int keyCode ) const;
@@ -38,7 +44,8 @@ public:
 	void OnKeyPressed( int keyCode );
 	void OnKeyReleased( int keyCode );
 
-	void OnMouseMove( int mouseX, int mouseY );
+	void OnMouseMove( int mouseMoveX, int mouseMoveY );
+	void OnMousePosition( int mousePositionX, int mousePositionY );
 	void OnMouseWheel( int mouseWheelDelta );
 
 	void OnMouseLost();
@@ -54,16 +61,16 @@ private:
 
 	byte m_keyStates[ s_numKeys ];
 
-	bool m_wasMouseMove;
+	bool m_lockCursor;
+	bool m_showCursor;
 
-	int m_mousePosX;
-	int m_mousePosY;
-
-	int m_prevMousePosX;
-	int m_prevMousePosY;
+	int m_mousePositionX;
+	int m_mousePositionY;
 
 	int m_mouseMoveX;
 	int m_mouseMoveY;
+	int m_mouseMoveXAccumulator;
+	int m_mouseMoveYAccumulator;
 
 	int m_mouseWheel;
 	int m_mouseWheelAccumulator;

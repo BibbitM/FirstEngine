@@ -1,13 +1,14 @@
 #include "InputManager.h"
 
 InputManager::InputManager()
-	: m_wasMouseMove( false )
-	, m_mousePosX( 0 )
-	, m_mousePosY( 0 )
-	, m_prevMousePosX( 0 )
-	, m_prevMousePosY( 0 )
+	: m_lockCursor( false )
+	, m_showCursor( true )
+	, m_mousePositionX( 0 )
+	, m_mousePositionY( 0 )
 	, m_mouseMoveX( 0 )
 	, m_mouseMoveY( 0 )
+	, m_mouseMoveXAccumulator( 0 )
+	, m_mouseMoveYAccumulator( 0 )
 	, m_mouseWheel( 0 )
 	, m_mouseWheelAccumulator( 0 )
 {
@@ -50,19 +51,10 @@ void InputManager::UpdateKeys()
 
 void InputManager::UpdateMouse()
 {
-	if( m_wasMouseMove )
-	{
-		m_mouseMoveX = m_mousePosX - m_prevMousePosX;
-		m_mouseMoveY = m_mousePosY - m_prevMousePosY;
-	}
-	else
-	{
-		m_mouseMoveX = 0;
-		m_mouseMoveY = 0;
-	}
-
-	m_prevMousePosX = m_mousePosX;
-	m_prevMousePosY = m_mousePosY;
+	m_mouseMoveX = m_mouseMoveXAccumulator;
+	m_mouseMoveY = m_mouseMoveYAccumulator;
+	m_mouseMoveXAccumulator = 0;
+	m_mouseMoveYAccumulator = 0;
 
 
 	m_mouseWheel = m_mouseWheelAccumulator;
@@ -99,12 +91,12 @@ bool InputManager::IsKeyReleased( int keyCode ) const
 
 int InputManager::GetMousePositionX() const
 {
-	return m_mousePosX;
+	return m_mousePositionX;
 }
 
 int InputManager::GetMousePositionY() const
 {
-	return m_mousePosY;
+	return m_mousePositionY;
 }
 
 int InputManager::GetMouseMoveX() const
@@ -137,12 +129,16 @@ void InputManager::OnKeyReleased( int keyCode )
 	m_keyStates[ keyCode ] &= ~PRESSED_CURR;
 }
 
-void InputManager::OnMouseMove( int mouseX, int mouseY )
+void InputManager::OnMouseMove( int mouseMoveX, int mouseMoveY )
 {
-	m_mousePosX = mouseX;
-	m_mousePosY = mouseY;
+	m_mouseMoveXAccumulator += mouseMoveX;
+	m_mouseMoveYAccumulator += mouseMoveY;
+}
 
-	m_wasMouseMove = true;
+void InputManager::OnMousePosition( int mousePositionX, int mousePositionY )
+{
+	m_mousePositionX = mousePositionX;
+	m_mousePositionY = mousePositionY;
 }
 
 void InputManager::OnMouseWheel( int mouseWheelDelta )
@@ -152,5 +148,4 @@ void InputManager::OnMouseWheel( int mouseWheelDelta )
 
 void InputManager::OnMouseLost()
 {
-	m_wasMouseMove = false;
 }

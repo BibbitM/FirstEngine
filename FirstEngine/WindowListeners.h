@@ -29,9 +29,13 @@ public:
 	virtual void OnKeyPressed( int keyCode ) = 0;
 	virtual void OnKeyReleased( int keyCode ) = 0;
 
-	virtual void OnMouseMove( int mouseX, int mouseY ) = 0;
+	virtual void OnMouseMove( int mouseMoveX, int mouseMoveY ) = 0;
+	virtual void OnMousePosition( int mousePositionX, int mousePositionY ) = 0;
 
 	virtual void OnMouseWheel( int mouseWheelDelta ) = 0;
+
+	virtual bool GetLockCursor() const = 0;
+	virtual bool GetShowCursor() const = 0;
 
 protected:
 	virtual ~IWindowInputListener() {}

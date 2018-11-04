@@ -24,13 +24,25 @@ namespace helper
 		{
 			m_inputManger->OnKeyReleased( keyCode );
 		}
-		virtual void OnMouseMove( int mouseX, int mouseY ) override
+		virtual void OnMouseMove( int mouseMoveX, int mouseMoveY ) override
 		{
-			m_inputManger->OnMouseMove( mouseX, mouseY );
+			m_inputManger->OnMouseMove( mouseMoveX, mouseMoveY );
+		}
+		virtual void OnMousePosition( int mousePositionX, int mousePositionY ) override
+		{
+			m_inputManger->OnMousePosition( mousePositionX, mousePositionY );
 		}
 		virtual void OnMouseWheel( int mouseWheelDelta ) override
 		{
 			m_inputManger->OnMouseWheel( mouseWheelDelta );
+		}
+		virtual bool GetLockCursor() const override
+		{
+			return m_inputManger->GetLockCursor();
+		}
+		virtual bool GetShowCursor() const override
+		{
+			return m_inputManger->GetShowCursor();
 		}
 
 		void ReleaseAll()
@@ -84,6 +96,8 @@ int Application::Run( int widht, int height )
 			}
 			else
 			{
+				m_window.Update();
+
 				game.Loop();
 
 				// Window is inactive so yield CPU time to other processes.

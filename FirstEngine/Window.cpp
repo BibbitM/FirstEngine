@@ -12,6 +12,9 @@ Window::Window( HINSTANCE hInstance, int cmdShow )
 	: m_hInstance( hInstance )
 	, m_hWnd( nullptr )
 	, m_cmdShow( cmdShow )
+	, m_isCursorLocked( false )
+	, m_lastMouseX( INT_MAX )
+	, m_lastMouseY( INT_MAX )
 	, m_activeAppListener( nullptr )
 	, m_inputListener( nullptr )
 {
@@ -53,6 +56,19 @@ void Window::Show()
 {
 	ShowWindow( m_hWnd, m_cmdShow );
 	UpdateWindow( m_hWnd );
+}
+
+void Window::Update()
+{
+	if( m_activeAppListener && m_activeAppListener->IsAppActive() )
+	{
+		UpdateLockCursor();
+	}
+	else
+	{
+		ClearMousePosition();
+		UnlockCursor();
+	}
 }
 
 void Window::SetActiveAppListener( IWindowAcitveAppListener* lisener )
@@ -197,13 +213,27 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 			bool sideButton1 = ( ( nMouseButtonState & MK_XBUTTON1 ) != 0 );
 			bool sideButton2 = ( ( nMouseButtonState & MK_XBUTTON2 ) != 0 );
 
+			int moveX = 0;
+			int moveY = 0;
+			if( m_lastMouseX != INT_MAX && m_lastMouseY != INT_MAX )
+			{
+				moveX = posX - m_lastMouseX;
+				moveY = posY - m_lastMouseY;
+			}
+
 			m_inputListener->OnKey( VK_LBUTTON, leftButton );
 			m_inputListener->OnKey( VK_RBUTTON, rightButton );
 			m_inputListener->OnKey( VK_MBUTTON, middleButton );
 			m_inputListener->OnKey( VK_XBUTTON1, sideButton1 );
 			m_inputListener->OnKey( VK_XBUTTON2, sideButton2 );
 
-			m_inputListener->OnMouseMove( posX, posY );
+			m_inputListener->OnMouseMove( moveX, moveY );
+
+			m_inputListener->OnMousePosition( posX, posY );
+
+			m_inputListener->OnMouseWheel( mouseWheelDelta );
+
+			UpdateMousePosition( posX, posY );
 		}
 	}
 
@@ -224,11 +254,7 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 		{
 			SetCapture( m_hWnd );
 
-			RECT rect;
-			GetClientRect( m_hWnd, &rect );
-			ClientToScreen( m_hWnd, reinterpret_cast< POINT* >( &rect.left ) );
-			ClientToScreen( m_hWnd, reinterpret_cast< POINT* >( &rect.right ) );
-			ClipCursor( &rect );
+			LockCursor();
 		}
 		return TRUE;
 
@@ -237,17 +263,23 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 	case WM_MBUTTONUP:
 	case WM_XBUTTONUP:
 		{
-			ClipCursor( nullptr );
-
 			ReleaseCapture();
 		}
 		return TRUE;
 
+	case WM_SETCURSOR:
+		if( m_activeAppListener && m_activeAppListener->IsAppActive() &&
+			m_inputListener && !m_inputListener->GetShowCursor() )
+		{
+			SetCursor( NULL );
+
+			return true; //< Prevent Windows from setting cursor to window class cursor.
+		}
+		break;
+
 	case WM_CAPTURECHANGED:
 		if( (HWND)lParam != m_hWnd )
 		{
-			ClipCursor( nullptr );
-
 			ReleaseCapture();
 		}
 		return TRUE;
@@ -258,22 +290,90 @@ LRESULT CALLBACK Window::WindowProc( UINT message, WPARAM wParam, LPARAM lParam 
 			if( wParam == TRUE && !m_activeAppListener->IsAppActive() ) // Handle only if previously not active
 			{
 				m_activeAppListener->SetAppActive( true );
-
-				//RECT rect;
-				//GetClientRect( m_hWnd, &rect );
-				//ClipCursor( &rect );
-				//SetCapture( m_hWnd );
 			}
 			else if( wParam == FALSE && m_activeAppListener->IsAppActive() ) // Handle only if previously active
 			{
 				m_activeAppListener->SetAppActive( false );
-			
-				//ReleaseCapture();
-				//ClipCursor( NULL );
+
+				ReleaseCapture();
+
+				UnlockCursor();
 			}
 		}
 		break;
 	}
 
 	return DefWindowProc( m_hWnd, message, wParam, lParam );
+}
+
+void Window::UpdateMousePosition( int mousePositionX, int mousePositionY )
+{
+	if( m_activeAppListener && !m_activeAppListener->IsAppActive() )
+	{
+		m_lastMouseX = INT_MAX;
+		m_lastMouseY = INT_MAX;
+	}
+	else if( m_inputListener && m_inputListener->GetLockCursor() && !m_inputListener->GetShowCursor() )
+	{
+		RECT rect;
+		GetClientRect( m_hWnd, &rect );
+
+		int wantedMousePosX = ( rect.left + rect.right ) / 2;
+		int wantedMousePosY = ( rect.top + rect.bottom ) / 2;
+
+		m_lastMouseX = wantedMousePosX;
+		m_lastMouseY = wantedMousePosY;
+
+		if( mousePositionX != wantedMousePosX || mousePositionY != wantedMousePosY )
+		{
+			POINT cursor = {};
+			cursor.x = wantedMousePosX;
+			cursor.y = wantedMousePosY;
+			ClientToScreen( m_hWnd, &cursor );
+			SetCursorPos( cursor.x, cursor.y );
+		}
+	}
+	else
+	{
+		m_lastMouseX = mousePositionX;
+		m_lastMouseY = mousePositionY;
+	}
+}
+
+void Window::ClearMousePosition()
+{
+	m_lastMouseX = INT_MAX;
+	m_lastMouseY = INT_MAX;
+}
+
+void Window::UpdateLockCursor()
+{
+	if( ( m_inputListener && m_inputListener->GetLockCursor() ) || ( GetCapture() == m_hWnd ) )
+	{
+		LockCursor();
+	}
+	else
+	{
+		UnlockCursor();
+	}
+}
+
+void Window::LockCursor()
+{
+	RECT rect;
+	GetClientRect( m_hWnd, &rect );
+	ClientToScreen( m_hWnd, reinterpret_cast< POINT* >( &rect.left ) );
+	ClientToScreen( m_hWnd, reinterpret_cast< POINT* >( &rect.right ) );
+	ClipCursor( &rect );
+
+	m_isCursorLocked = true;
+}
+
+void Window::UnlockCursor()
+{
+	if( m_isCursorLocked )
+	{
+		ClipCursor( nullptr );
+		m_isCursorLocked = false;
+	}
 }

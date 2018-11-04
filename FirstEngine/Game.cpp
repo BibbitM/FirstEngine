@@ -108,6 +108,11 @@ void Game::Render()
 	//#DEBUG
 	{
 		m_frameRenderer->AddText( 0, 0, 0xFFFFFFFF, "FPS: %.4f", 1.0f / m_timer.GetDeltaTimeSeconds() );
+
+		m_frameRenderer->AddText( 0, 20, 0xFFFF7373, "Mouse position: %i, %i\nMouse move: %i, %i\nMouse wheel: %i",
+								  GetInputManager()->GetMousePositionX(), GetInputManager()->GetMousePositionY(),
+								  GetInputManager()->GetMouseMoveX(), GetInputManager()->GetMouseMoveY(),
+								  GetInputManager()->GetMouseWheel() );
 	}
 
 	if (m_renderer->BeginRender())
