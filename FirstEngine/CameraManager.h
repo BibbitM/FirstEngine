@@ -27,7 +27,7 @@ public:
 	float GetFar() const { return m_far; }
 	void SetFar( float far_ ) { m_far = far_; }
 
-	D3DXVECTOR3 ScreenToDirection( int x, int y );
+	D3DXVECTOR3 ScreenToDirection( int x, int y ) const;
 
 	void StartUp( Level* level );
 	void ShutDown();

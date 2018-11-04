@@ -32,42 +32,33 @@ void CameraManager::SetPositionDirection( const D3DXVECTOR3& position, const D3D
 	m_lookDirection = direction;
 }
 
-D3DXVECTOR3 CameraManager::ScreenToDirection( int screenX, int screenY )
+D3DXVECTOR3 CameraManager::ScreenToDirection( int screenX, int screenY ) const
 {
-	float px = 0.0f;
-	float py = 0.0f;
-
 	// Get Projection matrix
-	D3DXMATRIX proj;
-	D3DXMatrixPerspectiveFovLH( &proj, m_fov, m_aspectRatio, m_near, m_far );
+	D3DXMATRIX matProj;
+	D3DXMATRIX invProj;
+	D3DXMatrixPerspectiveFovLH( &matProj, m_fov, m_aspectRatio, m_near, m_far );
+	D3DXMatrixInverse( &invProj, nullptr, &matProj );
 
-	D3DXMATRIX view;
+	D3DXMATRIX matView;
 	D3DXMATRIX invView;
 	D3DXVECTOR3 lookAtPosition = m_eyePosition + m_lookDirection * 50.0f;
 	D3DXVECTOR3 upVector = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
-	D3DXMatrixLookAtLH( &view, &m_eyePosition, &lookAtPosition, &upVector );
-	D3DXMatrixInverse( &invView, nullptr, &view );
+	D3DXMatrixLookAtLH( &matView, &m_eyePosition, &lookAtPosition, &upVector );
+	D3DXMatrixInverse( &invView, nullptr, &matView );
 
 
-	px = ( ( ( 2.0f * ( screenX + 0.5f ) ) / m_width ) - 1.0f ) / proj( 0, 0 );
-	py = ( ( ( -2.0f * (screenY + 0.5f) )/ m_height ) + 1.0f ) / proj( 1, 1 );
+	float px = ( ( ( 2.0f * ( screenX + 0.5f ) ) / m_width ) - 1.0f );
+	float py = ( ( ( -2.0f * ( screenY + 0.5f ) ) / m_height ) + 1.0f );
 
-	D3DXVECTOR3 rayOrigin = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	D3DXVECTOR3 rayDirection = D3DXVECTOR3( px, py, 1.0f );
 
-    // transform the ray's origin, w = 1.
-	D3DXVec3TransformCoord(
-		&rayOrigin,
-		&rayOrigin,
-		&invView );
-
-	// transform the ray's direction, w = 0.
-	D3DXVec3TransformNormal(
-		&rayDirection,
-		&rayDirection,
-		&invView );
-
-	// normalize the direction
+	// Transform the ray's direction.
+	// - Convert from screen space to view space.
+	D3DXVec3TransformCoord( &rayDirection, &rayDirection, &invProj );
+	// - Convert from view space to world space.
+	D3DXVec3TransformNormal( &rayDirection, &rayDirection, &invView );
+	// - Normalize the direction
 	D3DXVec3Normalize( &rayDirection, &rayDirection );
 
 	return rayDirection;
@@ -102,9 +93,9 @@ void CameraManager::Render() const
 	// a point to lookat, and a direction for which way is up.
 	D3DXMATRIXA16 matView;
 	D3DXVECTOR3 lookAtPosition = m_eyePosition + m_lookDirection * 50.0f;
-	D3DXVECTOR3 upVector = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	D3DXMatrixLookAtLH(&matView, &m_eyePosition, &lookAtPosition, &upVector);
-	device->SetTransform(D3DTS_VIEW, &matView);
+	D3DXVECTOR3 upVector = D3DXVECTOR3( 0.0f, 1.0f, 0.0f );
+	D3DXMatrixLookAtLH( &matView, &m_eyePosition, &lookAtPosition, &upVector );
+	device->SetTransform( D3DTS_VIEW, &matView );
 
 	// For the projection matrix, we set up a perspective transform (which
 	// transforms geometry from 3D view space to 2D viewport space, with
@@ -112,6 +103,6 @@ void CameraManager::Render() const
 	// a perspective transform, we need the field of view, the aspect ratio,
 	// and the near and far clipping planes.
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, m_fov, m_aspectRatio, m_near, m_far);
-	device->SetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixPerspectiveFovLH( &matProj, m_fov, m_aspectRatio, m_near, m_far );
+	device->SetTransform( D3DTS_PROJECTION, &matProj );
 }
