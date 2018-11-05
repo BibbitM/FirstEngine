@@ -21,9 +21,36 @@ protected:
 	virtual void OnUpdate( float deltaTime ) override;
 
 private:
+	struct Input
+	{
+		float yaw;
+		float pitch;
+		float distance;
+	};
+
 	void UpdateCamera( float deltaTime );
-	float GetCameraInput() const;
+	Input GetCameraInput( float deltaTime ) const;
+	void UpdateYaw( float yawInput );
+	void UpdatePitch( float pitchInput );
+	void UpdateDistance( float deltaTime, float distanceInput );
+
+	void SetCamera();
+	D3DXVECTOR3 GetCameraDirection() const;
 
 	const Actor* m_target;
-	float m_distance;
+
+	float m_yaw;
+	float m_pitch;
+	float m_currentDistance;
+	float m_wantedDistance;
+
+	float m_baseYawSpeed;
+	float m_basePitchSpeed;
+	float m_mouseYawSensitivity;
+	float m_mousePitchSensitivity;
+
+	float m_distanceChangeStep;
+	float m_distanceMin;
+	float m_distanceMax;
+	float m_distanceChangeSpeed;
 };
