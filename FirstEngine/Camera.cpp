@@ -48,7 +48,7 @@ void Camera::OnUpdate( float deltaTime )
 
 void Camera::UpdateCamera( float deltaTime )
 {
-	Input input = GetCameraInput( deltaTime );
+	Input input = GetInput( deltaTime );
 
 	UpdateYaw( input.yaw );
 
@@ -59,7 +59,7 @@ void Camera::UpdateCamera( float deltaTime )
 	SetCamera();
 }
 
-Camera::Input Camera::GetCameraInput( float deltaTime ) const
+Camera::Input Camera::GetInput( float deltaTime ) const
 {
 	const InputManager* inputMgr = GetLevel()->GetGame()->GetInputManager();
 

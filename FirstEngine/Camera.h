@@ -29,7 +29,7 @@ private:
 	};
 
 	void UpdateCamera( float deltaTime );
-	Input GetCameraInput( float deltaTime ) const;
+	Input GetInput( float deltaTime ) const;
 	void UpdateYaw( float yawInput );
 	void UpdatePitch( float pitchInput );
 	void UpdateDistance( float deltaTime, float distanceInput );
