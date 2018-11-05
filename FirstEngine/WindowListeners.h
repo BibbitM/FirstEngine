@@ -7,7 +7,7 @@ public:
 	virtual void SetAppActive( bool activate ) = 0;
 
 protected:
-	virtual ~IWindowAcitveAppListener(){}
+	virtual ~IWindowAcitveAppListener() {}
 };
 
 

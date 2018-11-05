@@ -9,7 +9,7 @@
 class Application : private NonCopyable, public IWindowAcitveAppListener
 {
 public:
-	Application(HINSTANCE hInstance, int cmdShow);
+	Application( HINSTANCE hInstance, int cmdShow );
 
 	~Application();
 
@@ -23,4 +23,3 @@ private:
 	Window m_window;
 	bool m_isActive;
 };
-

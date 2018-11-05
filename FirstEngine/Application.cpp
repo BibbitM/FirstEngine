@@ -103,7 +103,7 @@ int Application::Run( int widht, int height )
 				// Window is inactive so yield CPU time to other processes.
 				if( !m_isActive )
 				{
-					if (wasActive)
+					if( wasActive )
 					{
 						// Release all presed keys.
 						inputHook.ReleaseAll();
@@ -115,7 +115,7 @@ int Application::Run( int widht, int height )
 			}
 		}
 
-		retCode = (int)msg.wParam;
+		retCode = ( int )msg.wParam;
 
 		m_window.SetInputListener( nullptr );
 	}

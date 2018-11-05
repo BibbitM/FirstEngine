@@ -92,8 +92,8 @@ void Window::DeclareHighDpiAware()
 	if( hUser32 )
 	{
 		typedef BOOL( WINAPI * LPSetProcessDPIAware )( void );
-		LPSetProcessDPIAware pSetProcessDPIAware = (LPSetProcessDPIAware)GetProcAddress( hUser32,
-																						 "SetProcessDPIAware" );
+		LPSetProcessDPIAware pSetProcessDPIAware = ( LPSetProcessDPIAware )GetProcAddress( hUser32,
+																						   "SetProcessDPIAware" );
 		if( pSetProcessDPIAware )
 		{
 			pSetProcessDPIAware();
@@ -132,8 +132,8 @@ LRESULT CALLBACK Window::StaticWindowProc( HWND hWnd, UINT message, WPARAM wPara
 {
 	if( message == WM_CREATE )
 	{
-		LPCREATESTRUCT data = (LPCREATESTRUCT)lParam;
-		::SetWindowLongPtr( hWnd, GWLP_USERDATA, (LONG_PTR)data->lpCreateParams );
+		LPCREATESTRUCT data = ( LPCREATESTRUCT )lParam;
+		::SetWindowLongPtr( hWnd, GWLP_USERDATA, ( LONG_PTR )data->lpCreateParams );
 		auto window = reinterpret_cast< Window* >( data->lpCreateParams );
 		window->m_hWnd = hWnd;
 	}
