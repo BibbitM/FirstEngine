@@ -36,8 +36,8 @@ void Level::StartUp( Game* game )
 
 	// TEMP STUFF
 	{
-		GetGame()->GetInputManager()->SetLockCursor( true );
-		GetGame()->GetInputManager()->SetShowCursor( false );
+		GetGame()->GetInputManager()->SetLockCursor( false );
+		GetGame()->GetInputManager()->SetShowCursor( true );
 
 		CreateObject< Pawn >( []( auto floor ) {
 			floor->SetMesh( "Content\\plane.x" );
@@ -47,7 +47,7 @@ void Level::StartUp( Game* game )
 
 		CreateObject< Tiger >();
 
-		//CreateObject< TestCameraPoint >();
+		CreateObject< TestCameraPoint >();
 	}
 	// TEMP END
 }

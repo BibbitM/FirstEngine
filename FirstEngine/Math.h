@@ -14,22 +14,5 @@ namespace Math
 		return ( max < val ) ? max : ( val < min ) ? min : val;
 	}
 
-	template< class T >
-	constexpr const T& InterpolateTo( const T& current, const T& target, float deltaTime, const T& speed )
-	{
-		if( target > current )
-		{
-			return Clamp( current + speed * deltaTime, current, target );
-		}
-		else if( target < current )
-		{
-			return Clamp( current - speed * deltaTime, target, current );
-		}
-		else
-		{
-			return current;
-		}
-	}
-
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 }
