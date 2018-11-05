@@ -33,7 +33,7 @@ Window::~Window()
 
 void Window::Create( const WindowInitContext& initContext )
 {
-	const DWORD dwStyle = WS_OVERLAPPED | WS_BORDER | WS_CAPTION | WS_SYSMENU /* | WS_VISIBLE*/;
+	const DWORD dwStyle = WS_OVERLAPPED | WS_BORDER | WS_CAPTION | WS_SYSMENU /*WS_POPUP*/;
 	const DWORD dwExStyle = 0;
 
 	RECT windowRect = {};
