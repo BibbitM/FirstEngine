@@ -13,11 +13,11 @@ CameraManager::CameraManager()
 	, m_width( 1 )
 	, m_height( 1 )
 	, m_fov( Math::Deg2Rad( 60.0f ) )
-	, m_aspectRatio(1.0f)
-	, m_near(0.1f)
-	, m_far(1000.0f)
-	, m_eyePosition(0.0f, 1.0f, 0.0f)
-	, m_lookDirection(1.0f, 0.0f, 0.0f) //< Forward
+	, m_aspectRatio( 1.0f )
+	, m_near( 0.1f )
+	, m_far( 1000.0f )
+	, m_eyePosition( 0.0f, 1.0f, 0.0f )
+	, m_lookDirection( 1.0f, 0.0f, 0.0f ) //< Forward
 {
 }
 

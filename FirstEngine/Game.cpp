@@ -26,9 +26,9 @@ Game::~Game()
 	// Do nothing here, @see ShutDown.
 }
 
-bool Game::StartUp(const RendererInitContext& rendererContext)
+bool Game::StartUp( const RendererInitContext& rendererContext )
 {
-	if (!m_renderer->StartUp(rendererContext))
+	if( !m_renderer->StartUp( rendererContext ) )
 		return false;
 
 	m_meshManager->StartUp( m_renderer->GetDevice().m_d3d9 );
@@ -68,7 +68,7 @@ void Game::Loop()
 
 IRenderer* Game::GetRenderer() const
 {
-	assert(m_renderer);
+	assert( m_renderer );
 	return m_renderer.get();
 }
 
@@ -96,7 +96,7 @@ void Game::Update()
 
 	m_inputManager->Update();
 
-	m_level->Update(GetDeltaTime());
+	m_level->Update( GetDeltaTime() );
 }
 
 void Game::Render()
@@ -115,7 +115,7 @@ void Game::Render()
 								  GetInputManager()->GetMouseWheel() );
 	}
 
-	if (m_renderer->BeginRender())
+	if( m_renderer->BeginRender() )
 	{
 		m_renderer->Render( *m_frameRenderer );
 

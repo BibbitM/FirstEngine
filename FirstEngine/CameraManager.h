@@ -46,4 +46,3 @@ protected:
 	D3DXVECTOR3 m_eyePosition;
 	D3DXVECTOR3 m_lookDirection;
 };
-

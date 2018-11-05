@@ -39,8 +39,7 @@ void Level::StartUp( Game* game )
 		GetGame()->GetInputManager()->SetLockCursor( false );
 		GetGame()->GetInputManager()->SetShowCursor( true );
 
-		CreateObject< Pawn >( []( auto floor )
-		{
+		CreateObject< Pawn >( []( auto floor ) {
 			floor->SetMesh( "Content\\plane.x" );
 			floor->SetTexture( "Content\\lava.jpg" );
 			floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
