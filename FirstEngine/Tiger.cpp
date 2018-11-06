@@ -11,7 +11,11 @@ Tiger::Tiger()
 	, m_moveAcceleration( 10.0f )
 	, m_moveDeceleration( 100.0f )
 	, m_moveSpeedMax( 10.0f )
+	, m_moveAirControl( 0.1f )
+	, m_jumpSpeed( 5.0f )
+	, m_jumpGravity( 10.0f )
 	, m_rotationChangeSpeed( Math::Deg2Rad( 180.0f ) )
+	, m_rotationAirControl( 0.5f )
 {
 	// Setup mesh.
 	SetMesh( "Content\\tiger.x" );
@@ -53,7 +57,7 @@ void Tiger::UpdateTiger( float deltaTime )
 
 	UpdateRotation( input.rotation, deltaTime );
 
-	UpdateMovement( input.moveForward, input.moveRight, deltaTime );
+	UpdateMovement( input.moveForward, input.moveRight, input.jump, deltaTime );
 }
 
 Tiger::Input Tiger::GetInput() const
@@ -93,16 +97,30 @@ Tiger::Input Tiger::GetInput() const
 	}
 
 
+	if( inputMgr->IsKeyPressed( VK_SPACE ) )
+	{
+		input.jump = true;
+	}
+
+
 	return input;
 }
 
-void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, float deltaTime )
+void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, bool jumpInput, float deltaTime )
 {
 	D3DXVECTOR3 velocity = GetVelocity();
+	// Extract y (up/down) velocity to be calculated separately.
+	float velocityY = velocity.y;
+	velocity.y = 0.0f;
+
+
+	// Calculate 2D velocity (x, z).
+
+	const float controlFactor = GetTouchesGround() ? 1.0f : m_moveAirControl;
 
 	if( moveForwardInput == 0.0f && moveRightInput == 0.0f )
 	{
-		velocity = Math::InterpolateTo( velocity, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), deltaTime, m_moveDeceleration );
+		velocity = Math::InterpolateTo( velocity, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), deltaTime, m_moveDeceleration * controlFactor );
 	}
 	else
 	{
@@ -110,7 +128,7 @@ void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, float 
 		velocityChange += GetActorForwardVector() * moveForwardInput;
 		velocityChange += GetActorRightVector() * moveRightInput;
 
-		velocity = Math::InterpolateTo( velocity, velocity + velocityChange, deltaTime, m_moveAcceleration );
+		velocity = Math::InterpolateTo( velocity, velocity + velocityChange, deltaTime, m_moveAcceleration * controlFactor );
 
 		if( m_moveSpeedMax > 0.0f && D3DXVec3Length( &velocity ) > m_moveSpeedMax )
 		{
@@ -119,12 +137,33 @@ void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, float 
 		}
 	}
 
+
+	// Calculate up/down velocity (y).
+
+	if( GetTouchesGround() )
+	{
+		velocityY = 0.0f;
+	}
+
+	if( GetTouchesGround() && jumpInput )
+	{
+		velocityY += m_jumpSpeed;
+	}
+	else
+	{
+		velocityY -= m_jumpGravity * deltaTime;
+	}
+
+
+	velocity.y = velocityY;
 	SetVelocity( velocity );
 }
 
 void Tiger::UpdateRotation( float rotationInput, float deltaTime )
 {
+	const float controlFactor = GetTouchesGround() ? 1.0f : m_rotationAirControl;
+
 	D3DXVECTOR3 rotation = GetActorRotation();
-	rotation.y += rotationInput * m_rotationChangeSpeed * deltaTime;
+	rotation.y += rotationInput * m_rotationChangeSpeed * controlFactor * deltaTime;
 	SetActorRotation( rotation );
 }

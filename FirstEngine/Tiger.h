@@ -22,18 +22,24 @@ private:
 		float moveForward;
 		float moveRight;
 		float rotation;
+		bool jump;
 	};
 
 	void UpdateTiger( float deltaTime );
 	Input GetInput() const;
-	void UpdateMovement( float moveForward, float moveRight, float deltaTime );
-	void UpdateRotation( float rotation, float deltaTime );
+	void UpdateMovement( float moveForwardInput, float moveRightInput, bool jumpInput, float deltaTime );
+	void UpdateRotation( float rotationInput, float deltaTime );
 
 	Camera* m_camera;
 
 	float m_moveAcceleration;
 	float m_moveDeceleration;
 	float m_moveSpeedMax;
+	float m_moveAirControl;
+
+	float m_jumpSpeed;
+	float m_jumpGravity;
 
 	float m_rotationChangeSpeed;
+	float m_rotationAirControl;
 };
