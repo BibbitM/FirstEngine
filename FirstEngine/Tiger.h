@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Pawn.h"
+#include "Character.h"
 
 class Camera;
 
-class Tiger : public Pawn
+class Tiger : public Character
 {
 public:
 	Tiger();
@@ -17,8 +17,23 @@ protected:
 	virtual void OnUpdate( float deltaTime ) override;
 
 private:
-	void UpdateRotation( float deltaTime );
-	float GetRotationInput() const;
+	struct Input
+	{
+		float moveForward;
+		float moveRight;
+		float rotation;
+	};
+
+	void UpdateTiger( float deltaTime );
+	Input GetInput() const;
+	void UpdateMovement( float moveForward, float moveRight, float deltaTime );
+	void UpdateRotation( float rotation, float deltaTime );
 
 	Camera* m_camera;
+
+	float m_moveAcceleration;
+	float m_moveDeceleration;
+	float m_moveSpeedMax;
+
+	float m_rotationChangeSpeed;
 };
