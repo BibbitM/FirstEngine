@@ -34,4 +34,8 @@ namespace Math
 	D3DXVECTOR3 InterpolateTo( const D3DXVECTOR3& current, const D3DXVECTOR3& target, float deltaTime, float speed );
 
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
+
+	extern const D3DXVECTOR3 s_forwardVector3;
+	extern const D3DXVECTOR3 s_rightVector3;
+	extern const D3DXVECTOR3 s_upVector3;
 }

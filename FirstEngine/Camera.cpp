@@ -9,7 +9,7 @@
 Camera::Camera()
 	: m_target( nullptr )
 	, m_yaw( 0.0f )
-	, m_pitch( 0.0f )
+	, m_pitch( 30.0f )
 	, m_currentDistance( 5.0f )
 	, m_wantedDistance( 5.0f )
 	, m_baseYawSpeed( 90.0f )
@@ -126,7 +126,7 @@ D3DXVECTOR3 Camera::GetCameraDirection() const
 {
 	D3DXMATRIX matCamera;
 	D3DXMatrixRotationYawPitchRoll( &matCamera, Math::Deg2Rad( m_yaw ), Math::Deg2Rad( m_pitch ), 0.0f );
-	D3DXVECTOR3 direction( 0.0f, 0.0f, 1.0f );
-	D3DXVec3TransformNormal( &direction, &direction, &matCamera );
+	D3DXVECTOR3 direction;
+	D3DXVec3TransformNormal( &direction, &Math::s_forwardVector3, &matCamera );
 	return direction;
 }
