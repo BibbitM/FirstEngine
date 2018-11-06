@@ -8,6 +8,8 @@
 
 Camera::Camera()
 	: m_target( nullptr )
+	, m_previousTargetPosition( 0.0f, 0.0f, 0.0f )
+	, m_previousTargetPositionSet( false )
 	, m_yaw( 0.0f )
 	, m_pitch( 30.0f )
 	, m_currentDistance( 5.0f )
@@ -24,6 +26,12 @@ Camera::Camera()
 }
 
 Camera::~Camera() = default;
+
+void Camera::SetTarget( const Actor* target )
+{
+	m_target = target;
+	m_previousTargetPositionSet = false;
+}
 
 D3DXVECTOR3 Camera::GetTargetPosition() const
 {
@@ -50,6 +58,8 @@ void Camera::UpdateCamera( float deltaTime )
 {
 	Input input = GetInput( deltaTime );
 
+	UpdateYawFromTargetMovement();
+
 	UpdateYaw( input.yaw );
 
 	UpdatePitch( input.pitch );
@@ -57,6 +67,8 @@ void Camera::UpdateCamera( float deltaTime )
 	UpdateDistance( deltaTime, input.distance );
 
 	SetCamera();
+
+	StoreTargetPosition();
 }
 
 Camera::Input Camera::GetInput( float deltaTime ) const
@@ -96,6 +108,34 @@ Camera::Input Camera::GetInput( float deltaTime ) const
 	return input;
 }
 
+void Camera::UpdateYawFromTargetMovement()
+{
+	if( !m_previousTargetPositionSet )
+	{
+		return;
+	}
+
+	D3DXVECTOR3 prevDirection = GetCameraDirection();
+	prevDirection.y = 0.0f;
+	D3DXVec3Normalize( &prevDirection, &prevDirection );
+
+	D3DXVECTOR3 eyePosition = m_previousTargetPosition - prevDirection * m_currentDistance;
+
+	D3DXVECTOR3 currDirection = GetTargetPosition() - eyePosition;
+	currDirection.y = 0.0f;
+	D3DXVec3Normalize( &currDirection, &currDirection );
+
+	D3DXVECTOR3 directionCross;
+	D3DXVec3Cross( &directionCross, &prevDirection, &currDirection );
+
+	float yawChangeSin = directionCross.y;
+	// Add clamp. If value is slightly greater than 1 we will get NAN in next line.
+	yawChangeSin = Math::Clamp( yawChangeSin, -1.0f, +1.0f );
+	float yawChange = Math::Rad2Deg( asinf( yawChangeSin ) );
+
+	UpdateYaw( yawChange );
+}
+
 void Camera::UpdateYaw( float yawInput )
 {
 	m_yaw = fmodf( m_yaw + yawInput, 360.0f );
@@ -111,6 +151,12 @@ void Camera::UpdateDistance( float deltaTime, float distanceInput )
 	m_wantedDistance = Math::Clamp( m_wantedDistance + distanceInput, m_distanceMin, m_distanceMax );
 
 	m_currentDistance = Math::InterpolateTo( m_currentDistance, m_wantedDistance, deltaTime, m_distanceChangeSpeed );
+}
+
+void Camera::StoreTargetPosition()
+{
+	m_previousTargetPosition = GetTargetPosition();
+	m_previousTargetPositionSet = true;
 }
 
 void Camera::SetCamera()

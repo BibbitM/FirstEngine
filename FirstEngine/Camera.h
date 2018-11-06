@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Object.h"
+#include <d3dx9math.h>
 
 class Actor;
-struct D3DXVECTOR3;
 
 class Camera : public Object
 {
@@ -13,7 +13,7 @@ public:
 
 	const Actor* GetTarget() const { return m_target; }
 
-	void SetTarget( const Actor* target ) { m_target = target; }
+	void SetTarget( const Actor* target );
 
 	D3DXVECTOR3 GetTargetPosition() const;
 
@@ -30,9 +30,11 @@ private:
 
 	void UpdateCamera( float deltaTime );
 	Input GetInput( float deltaTime ) const;
+	void UpdateYawFromTargetMovement();
 	void UpdateYaw( float yawInput );
 	void UpdatePitch( float pitchInput );
 	void UpdateDistance( float deltaTime, float distanceInput );
+	void StoreTargetPosition();
 
 	void SetCamera();
 	D3DXVECTOR3 GetCameraDirection() const;
@@ -53,4 +55,7 @@ private:
 	float m_distanceMin;
 	float m_distanceMax;
 	float m_distanceChangeSpeed;
+
+	D3DXVECTOR3 m_previousTargetPosition;
+	bool m_previousTargetPositionSet;
 };
