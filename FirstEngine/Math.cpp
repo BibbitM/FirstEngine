@@ -11,6 +11,15 @@ float Math::Deg2Rad( float deg )
 	return D3DXToRadian( deg );
 }
 
+D3DXVECTOR3 Math::InterpolateTo( const D3DXVECTOR3& current, const D3DXVECTOR3& target, float deltaTime, float speed )
+{
+	return D3DXVECTOR3(
+		InterpolateTo< float >( current.x, target.x, deltaTime, speed ),
+		InterpolateTo< float >( current.y, target.y, deltaTime, speed ),
+		InterpolateTo< float >( current.z, target.z, deltaTime, speed )
+	);
+}
+
 D3DXMATRIX Math::BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale )
 {
 	D3DXMATRIX worldMatrix;
