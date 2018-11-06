@@ -120,15 +120,26 @@ void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, bool j
 
 	if( moveForwardInput == 0.0f && moveRightInput == 0.0f )
 	{
-		velocity = Math::InterpolateTo( velocity, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), deltaTime, m_moveDeceleration * controlFactor );
+		float speed = D3DXVec3Length( &velocity );
+		speed = Math::InterpolateTo( speed, 0.0f, deltaTime, m_moveDeceleration * controlFactor );
+		if( speed <= 0.0f )
+		{
+			velocity = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
+		}
+		else
+		{
+			D3DXVec3Normalize( &velocity, &velocity );
+			velocity *= speed;
+		}
 	}
 	else
 	{
-		D3DXVECTOR3 velocityChange( 0.0f, 0.0f, 0.0f );
-		velocityChange += GetActorForwardVector() * moveForwardInput;
-		velocityChange += GetActorRightVector() * moveRightInput;
+		D3DXVECTOR3 velocityChangeInput( 0.0f, 0.0f, 0.0f );
+		velocityChangeInput += GetActorForwardVector() * moveForwardInput;
+		velocityChangeInput += GetActorRightVector() * moveRightInput;
+		D3DXVec3Normalize( &velocityChangeInput, &velocityChangeInput );
 
-		velocity = Math::InterpolateTo( velocity, velocity + velocityChange, deltaTime, m_moveAcceleration * controlFactor );
+		velocity += velocityChangeInput * m_moveAcceleration * controlFactor * deltaTime;
 
 		if( m_moveSpeedMax > 0.0f && D3DXVec3Length( &velocity ) > m_moveSpeedMax )
 		{

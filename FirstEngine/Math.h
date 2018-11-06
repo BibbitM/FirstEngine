@@ -15,7 +15,7 @@ namespace Math
 	}
 
 	template< class T >
-	constexpr const T InterpolateTo( const T& current, const T& target, float deltaTime, const T& speed )
+	constexpr T InterpolateTo( const T& current, const T& target, float deltaTime, const T& speed )
 	{
 		if( target > current )
 		{
@@ -30,8 +30,6 @@ namespace Math
 			return current;
 		}
 	}
-
-	D3DXVECTOR3 InterpolateTo( const D3DXVECTOR3& current, const D3DXVECTOR3& target, float deltaTime, float speed );
 
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 
