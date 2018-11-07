@@ -38,13 +38,31 @@ void InputManager::UpdateKeys()
 {
 	for( int key = 0; key < s_numKeys; ++key )
 	{
-		if( ( m_keyStates[ key ] & PRESSED_CURR ) != 0 )
+		if( ( m_keyStates[ key ] & PRESSED ) != 0 )
 		{
-			m_keyStates[ key ] |= PRESSED_PREV;
+			if( ( m_keyStates[ key ] & WAS_PRESSED ) == 0 )
+			{
+				m_keyStates[ key ] |= JUST_PRESSED;
+			}
+			else
+			{
+				m_keyStates[ key ] &= ~JUST_PRESSED;
+			}
+			m_keyStates[ key ] |= WAS_PRESSED;
+			m_keyStates[ key ] &= ~JUST_RELEASED;
 		}
 		else
 		{
-			m_keyStates[ key ] &= ~PRESSED_PREV;
+			if( ( m_keyStates[ key ] & WAS_PRESSED ) != 0 )
+			{
+				m_keyStates[ key ] |= JUST_RELEASED;
+			}
+			else
+			{
+				m_keyStates[ key ] &= ~JUST_RELEASED;
+			}
+			m_keyStates[ key ] &= ~JUST_PRESSED;
+			m_keyStates[ key ] &= ~WAS_PRESSED;
 		}
 	}
 }
@@ -74,19 +92,25 @@ byte InputManager::GetKeyState( int keyCode ) const
 bool InputManager::IsKeyPressed( int keyCode ) const
 {
 	const byte keyState = GetKeyState( keyCode );
-	return ( keyState & PRESSED_CURR ) != 0;
+	return ( keyState & PRESSED ) != 0;
 }
 
-bool InputManager::WasKeyJustPressed( int keyCode ) const
+bool InputManager::IsKeyJustPressed( int keyCode ) const
 {
 	const byte keyState = GetKeyState( keyCode );
-	return ( keyState & PRESSED_CURR ) != 0 && ( keyState & PRESSED_PREV ) == 0;
+	return ( keyState & JUST_PRESSED ) != 0;
 }
 
 bool InputManager::IsKeyReleased( int keyCode ) const
 {
 	const byte keyState = GetKeyState( keyCode );
-	return ( keyState & PRESSED_CURR ) == 0;
+	return ( keyState & PRESSED ) == 0;
+}
+
+bool InputManager::IsKeyJustReleased( int keyCode ) const
+{
+	const byte keyState = GetKeyState( keyCode );
+	return ( keyState & JUST_RELEASED ) != 0;
 }
 
 int InputManager::GetMousePositionX() const
@@ -121,12 +145,12 @@ void InputManager::OnKeyPressed( int keyCode )
 		return;
 	}
 
-	m_keyStates[ keyCode ] |= PRESSED_CURR;
+	m_keyStates[ keyCode ] |= PRESSED;
 }
 
 void InputManager::OnKeyReleased( int keyCode )
 {
-	m_keyStates[ keyCode ] &= ~PRESSED_CURR;
+	m_keyStates[ keyCode ] &= ~PRESSED;
 }
 
 void InputManager::OnMouseMove( int mouseMoveX, int mouseMoveY )

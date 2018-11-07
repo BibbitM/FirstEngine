@@ -8,8 +8,10 @@ class InputManager : private NonCopyable
 public:
 	static const int s_numKeys = 255;
 
-	static const byte PRESSED_CURR = 1;
-	static const byte PRESSED_PREV = 2;
+	static const byte PRESSED = 1;
+	static const byte WAS_PRESSED = 2;
+	static const byte JUST_PRESSED = 4;
+	static const byte JUST_RELEASED = 8;
 
 	InputManager();
 	~InputManager();
@@ -28,9 +30,10 @@ public:
 	byte GetKeyState( int keyCode ) const;
 
 	bool IsKeyPressed( int keyCode ) const;
-	bool WasKeyJustPressed( int keyCode ) const;
+	bool IsKeyJustPressed( int keyCode ) const;
 
 	bool IsKeyReleased( int keyCode ) const;
+	bool IsKeyJustReleased( int keyCode ) const;
 
 	int GetMousePositionX() const;
 	int GetMousePositionY() const;
