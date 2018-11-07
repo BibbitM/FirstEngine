@@ -97,7 +97,7 @@ Tiger::Input Tiger::GetInput() const
 	}
 
 
-	if( inputMgr->IsKeyPressed( VK_SPACE ) )
+	if( inputMgr->IsKeyJustPressed( VK_SPACE ) )
 	{
 		input.jump = true;
 	}
