@@ -31,6 +31,18 @@ namespace Math
 		}
 	}
 
+	template< class T >
+	constexpr T Lerp( const T& from, const T& to, float alpha )
+	{
+		return from * ( 1.0f - alpha ) + to * alpha;
+	}
+
+	template< class T >
+	constexpr T Square( const T& val )
+	{
+		return val * val;
+	}
+
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 
 	extern const D3DXVECTOR3 s_forwardVector3;

@@ -184,6 +184,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCameraPoint.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="FrameRenderer.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pawn.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCameraPoint.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="InputManager.h" />

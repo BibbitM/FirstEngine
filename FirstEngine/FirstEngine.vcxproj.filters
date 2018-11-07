@@ -104,6 +104,9 @@
     <ClCompile Include="TestCameraPoint.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -211,6 +214,9 @@
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="TestCameraPoint.h">
+      <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
