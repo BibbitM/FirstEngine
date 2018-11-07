@@ -1,4 +1,6 @@
 #include "Character.h"
+#include "Level.h"
+#include "Terrain.h"
 
 Character::Character()
 	: m_velocity( 0.0f, 0.0f, 0.0f )
@@ -14,9 +16,13 @@ void Character::OnUpdate( float deltaTime )
 
 	D3DXVECTOR3 position = GetActorPosition();
 	position += m_velocity * deltaTime;
-	if( position.y <= 0.0f )
+
+	const float terrainHeight = GetLevel()->GetTerrain()->GetHeight( position );
+
+
+	if( position.y <= terrainHeight )
 	{
-		position.y = 0.0f;
+		position.y = terrainHeight;
 		m_touchesGround = true;
 	}
 	else

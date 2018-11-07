@@ -1,13 +1,13 @@
 #include "Level.h"
 #include "CameraManager.h"
 #include "Object.h"
+#include "Terrain.h"
 #include <algorithm>
 #include <cassert>
 
 // TEMP STUFF
 #include "Game.h"
 #include "InputManager.h"
-#include "Pawn.h"
 #include "TestCameraPoint.h"
 #include "Tiger.h"
 // TEMP END
@@ -16,6 +16,7 @@
 Level::Level()
 	: m_game( nullptr )
 	, m_cameraManager( std::make_unique< CameraManager >() )
+	, m_terrain( nullptr )
 {
 }
 
@@ -24,6 +25,7 @@ Level::~Level()
 	assert( !m_game );
 	assert( m_objects.empty() );
 	assert( m_registeredObjects.empty() );
+	assert( !m_terrain );
 }
 
 void Level::StartUp( Game* game )
@@ -34,16 +36,18 @@ void Level::StartUp( Game* game )
 
 	m_cameraManager->StartUp( this );
 
+	LoadTerrain();
+
 	// TEMP STUFF
 	{
 		GetGame()->GetInputManager()->SetLockCursor( true );
 		GetGame()->GetInputManager()->SetShowCursor( false );
 
-		CreateObject< Pawn >( []( auto floor ) {
-			floor->SetMesh( "Content\\plane.x" );
-			floor->SetTexture( "Content\\lava.jpg" );
-			floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
-		} );
+		//CreateObject< Pawn >( []( auto floor ) {
+		//	floor->SetMesh( "Content\\plane.x" );
+		//	floor->SetTexture( "Content\\lava.jpg" );
+		//	floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
+		//} );
 
 		CreateObject< Tiger >();
 
@@ -70,6 +74,8 @@ void Level::ShutDown()
 	{
 		m_registeredObjects.front()->Destroy();
 	}
+
+	m_terrain = nullptr;
 
 	m_cameraManager->ShutDown();
 
@@ -155,4 +161,17 @@ CameraManager* Level::GetCameraManager() const
 {
 	assert( m_cameraManager );
 	return m_cameraManager.get();
+}
+
+Terrain* Level::GetTerrain() const
+{
+	assert( m_terrain );
+	return m_terrain;
+}
+
+void Level::LoadTerrain()
+{
+	m_terrain = CreateObject< Terrain >( []( auto terrain ) {
+		terrain->SetTerrainFile( "Content\\terrain.txt" );
+	} );
 }

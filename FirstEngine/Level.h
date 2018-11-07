@@ -8,6 +8,7 @@ class CameraManager;
 class FrameRenderer;
 class Game;
 class Object;
+class Terrain;
 
 class Level : private NonCopyable
 {
@@ -35,13 +36,20 @@ public:
 	Game* GetGame() const;
 	CameraManager* GetCameraManager() const;
 
+	Terrain* GetTerrain() const;
+
 private:
+	void LoadTerrain();
+
 	Game* m_game;
 
 	std::unique_ptr< CameraManager > m_cameraManager;
 
 	std::vector< Object* > m_objects;
 	std::vector< Object* > m_registeredObjects;
+
+	// Game specific objects;
+	Terrain* m_terrain;
 };
 
 template< class TObject >
