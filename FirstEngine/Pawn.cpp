@@ -142,7 +142,6 @@ void Pawn::UnloadTexture()
 
 	if( m_texture )
 	{
-
 		GetLevel()->GetGame()->GetTextureManager()->UnloadTexture( m_texture );
 		m_texture.clear();
 	}
