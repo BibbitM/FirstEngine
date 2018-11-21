@@ -31,5 +31,5 @@ D3DXMATRIX Math::BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& ro
 
 	D3DXMatrixScaling( &scalingMatrix, scale.x, scale.y, scale.z );
 
-	return worldMatrix = rotationMatrix * scalingMatrix * translationMatrix;
+	return worldMatrix = scalingMatrix * rotationMatrix * translationMatrix;
 }
