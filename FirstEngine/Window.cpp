@@ -60,7 +60,7 @@ void Window::Show()
 
 void Window::Update()
 {
-	if( m_activeAppListener && m_activeAppListener->IsAppActive() )
+	if( m_activeAppListener && m_activeAppListener->IsAppActive() && GetForegroundWindow() == m_hWnd )
 	{
 		UpdateLockCursor();
 	}
