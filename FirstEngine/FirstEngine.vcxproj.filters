@@ -107,6 +107,9 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -217,6 +220,9 @@
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Terrain.h">
+      <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
