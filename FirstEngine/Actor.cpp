@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "Math.h"
+#include <algorithm>
 #include <cassert>
 
 Actor::Actor()
@@ -22,8 +23,14 @@ D3DXMATRIX Actor::GetActorLocalMatrix() const
 
 D3DXMATRIX Actor::GetActorWorldMatrix() const
 {
-	// TODO: Calculate world matrix from parents and local.
-	return GetActorLocalMatrix();
+	if( IsAttached() )
+	{
+		return GetActorLocalMatrix() * GetParent()->GetActorWorldMatrix();
+	}
+	else
+	{
+		return GetActorLocalMatrix();
+	}
 }
 
 D3DXVECTOR3 Actor::GetActorForwardVector() const
@@ -52,46 +59,80 @@ D3DXVECTOR3 Actor::GetActorUpVector() const
 
 bool Actor::IsAttachedTo( const Actor* parentToTest ) const
 {
-	UNREFERENCED_PARAMETER( parentToTest );
-	// TODO: Check if this actor is attached to given parent.
+	if( !parentToTest )
+	{
+		return false;
+	}
+
+	for( Actor* parent = m_parent; parent != nullptr; parent = parent->GetParent() )
+	{
+		if( parentToTest == parent )
+		{
+			return true;
+		}
+	}
 
 	return false;
 }
 
 bool Actor::HasChild( const Actor* childToTest ) const
 {
-	UNREFERENCED_PARAMETER( childToTest );
-	// TOOD: Check if this actor has given child.
+	for( const Actor* child : m_children )
+	{
+		if( child == childToTest )
+		{
+			return true;
+		}
+	}
 
 	return false;
 }
 
 void Actor::AttachTo( Actor* parent )
 {
-	UNREFERENCED_PARAMETER( parent );
-	// TODO: Attach to given parent.
+	assert( parent );
 
-	// If this actor is already attached to given parent than do nothing.
+	if( m_parent == parent )
+	{
+		assert( m_parent->HasChild( this ) );
+		return;
+	}
 
-	// If this actor is attached to other parent then detach before proceeding.
+	if( m_parent )
+	{
+		DetachFromParent();
+	}
 
 	// Check if attaching to new parent will create cycle.
+	if( parent->IsAttachedTo( this ) )
+	{
+		return;
+	}
 
-	// Do the attach.
+	m_parent = parent;
+	m_parent->m_children.push_back( this );
 }
 
 void Actor::DetachFromParent()
 {
-	// TODO: Detach from parent.
+	assert( m_parent );
+	assert( m_parent->HasChild( this ) );
+
+	m_parent->m_children.erase( std::remove( m_parent->m_children.begin(), m_parent->m_children.end(), this ), m_parent->m_children.end() );
+	m_parent = nullptr;
 }
 
 void Actor::OnShutDown()
 {
-	// TODO: If attached to anybody then detach.
+	if( IsAttached() )
+	{
+		DetachFromParent();
+	}
 
-	// Detach from parent.
-
-	// Detach children.
+	while( HasChildren() )
+	{
+		m_children[ 0 ]->DetachFromParent();
+	}
 
 	Object::OnShutDown();
 }
