@@ -32,6 +32,7 @@ void MeshRenderer::Render( const std::vector< RenderableMesh >& meshes )
 		m_device->SetTransform( D3DTS_WORLD, &mesh.matrix );
 
 		D3DMATERIAL9 mtrl = {};
+		mtrl.Diffuse = D3DXCOLOR( 0xFFFFFFFF );
 		mtrl.Ambient = D3DXCOLOR( mesh.color );
 		m_device->SetMaterial( &mtrl );
 

@@ -133,11 +133,21 @@ void Renderer::SetupDevice()
 	// Turn on the zbuffer
 	m_direct3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
-	// Turn off lighting
-	//m_direct3dDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	// Turn on lighting
+	m_direct3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
+
+	// ... and set the default light.
+	D3DLIGHT9 light = {};
+
+	light.Type = D3DLIGHT_DIRECTIONAL;
+	light.Diffuse = D3DXCOLOR( 0xCCCCCCFF );
+	light.Direction = D3DXVECTOR3( -1.0f, -0.3f, -1.0f );
+
+	m_direct3dDevice->SetLight( 0, &light );
+	m_direct3dDevice->LightEnable( 0, TRUE );
 
 	// Turn on ambient lighting
-	m_direct3dDevice->SetRenderState( D3DRS_AMBIENT, 0xffffffff );
+	m_direct3dDevice->SetRenderState( D3DRS_AMBIENT, 0xCCCCCCFF );
 }
 
 void Renderer::CreateRenderers()
