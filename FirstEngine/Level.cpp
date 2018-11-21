@@ -6,6 +6,7 @@
 #include <cassert>
 
 // TEMP STUFF
+#include "Car.h"
 #include "Game.h"
 #include "InputManager.h"
 #include "TestCameraPoint.h"
@@ -43,13 +44,9 @@ void Level::StartUp( Game* game )
 		GetGame()->GetInputManager()->SetLockCursor( true );
 		GetGame()->GetInputManager()->SetShowCursor( false );
 
-		//CreateObject< Pawn >( []( auto floor ) {
-		//	floor->SetMesh( "Content\\plane.x" );
-		//	floor->SetTexture( "Content\\lava.jpg" );
-		//	floor->SetActorScale( D3DXVECTOR3( 10.0f, 1.0f, 10.0f ) );
-		//} );
+		CreateObject< Car >();
 
-		CreateObject< Tiger >();
+		//CreateObject< Tiger >();
 
 		//CreateObject< TestCameraPoint >();
 	}
