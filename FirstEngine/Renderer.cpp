@@ -141,14 +141,17 @@ void Renderer::SetupDevice()
 	D3DLIGHT9 light = {};
 
 	light.Type = D3DLIGHT_DIRECTIONAL;
-	light.Diffuse = D3DXCOLOR( 0xCCCCCCFF );
-	light.Direction = D3DXVECTOR3( -1.0f, -0.3f, -1.0f );
+	light.Diffuse = D3DXCOLOR( 0xFF222222 );
+
+	D3DXVECTOR3 lightDir = D3DXVECTOR3( -1.0f, -0.3f, -1.0f );
+	D3DXVec3Normalize( &lightDir, &lightDir );
+	light.Direction = lightDir;
 
 	m_direct3dDevice->SetLight( 0, &light );
 	m_direct3dDevice->LightEnable( 0, TRUE );
 
 	// Turn on ambient lighting
-	m_direct3dDevice->SetRenderState( D3DRS_AMBIENT, 0xCCCCCCFF );
+	m_direct3dDevice->SetRenderState( D3DRS_AMBIENT, 0xFFCCCCCC );
 }
 
 void Renderer::CreateRenderers()
