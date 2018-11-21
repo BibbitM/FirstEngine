@@ -103,7 +103,7 @@ void Renderer::EndRender()
 void Renderer::Present()
 {
 	// Present the backbuffer contents to the display
-	m_direct3dDevice->Present(nullptr, nullptr, nullptr, nullptr);
+	m_direct3dDevice->Present( nullptr, nullptr, nullptr, nullptr );
 }
 
 bool Renderer::CreateDevice( const RendererInitContext& rendererContext )
@@ -116,10 +116,11 @@ bool Renderer::CreateDevice( const RendererInitContext& rendererContext )
 	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
 	d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 
 	// Create the D3DDevice
 	if( FAILED( m_direct3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, rendererContext.hWnd,
-										  D3DCREATE_SOFTWARE_VERTEXPROCESSING /*D3DCREATE_HARDWARE_VERTEXPROCESSING*/,
+										  D3DCREATE_HARDWARE_VERTEXPROCESSING,
 										  &d3dpp, &m_direct3dDevice ) ) )
 	{
 		return false;
