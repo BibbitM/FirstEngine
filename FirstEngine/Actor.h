@@ -33,7 +33,6 @@ public:
 	bool HasChildren() const { return !m_children.empty(); }
 	bool HasChild( const Actor* childToTest ) const;
 
-	void SetupAttachment( Actor* parent );
 	void AttachTo( Actor* parent );
 	void DetachFromParent();
 
