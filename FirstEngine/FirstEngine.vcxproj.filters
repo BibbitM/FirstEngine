@@ -33,6 +33,9 @@
     <Filter Include="Source\Gameplay">
       <UniqueIdentifier>{25423a4a-d95d-4393-b310-ef24042ca626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Collisions">
+      <UniqueIdentifier>{0a3a82fe-be77-4d2c-b9cc-59fc34cf81fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -109,6 +112,18 @@
     </ClCompile>
     <ClCompile Include="GenericCamera.cpp">
       <Filter>Source\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeSphere.cpp">
+      <Filter>Source\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeAabb.cpp">
+      <Filter>Source\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="Collisions.cpp">
+      <Filter>Source\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionResult.cpp">
+      <Filter>Source\Collisions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +239,18 @@
     </ClInclude>
     <ClInclude Include="GenericCamera.h">
       <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionResult.h">
+      <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeAabb.h">
+      <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeSphere.h">
+      <Filter>Source\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

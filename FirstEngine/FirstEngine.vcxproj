@@ -173,6 +173,8 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CollisionResult.cpp" />
+    <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="GenericCamera.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -189,6 +191,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ShapeAabb.cpp" />
+    <ClCompile Include="ShapeSphere.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCameraPoint.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
@@ -203,12 +207,16 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CollisionResult.h" />
+    <ClInclude Include="Collisions.h" />
     <ClInclude Include="GenericCamera.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="FrameRenderer.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pawn.h" />
+    <ClInclude Include="ShapeAabb.h" />
+    <ClInclude Include="ShapeSphere.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCameraPoint.h" />
     <ClInclude Include="Texture.h" />
