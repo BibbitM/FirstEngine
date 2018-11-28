@@ -9,7 +9,7 @@
 Tiger::Tiger()
 	: m_camera( nullptr )
 	, m_moveAcceleration( 10.0f )
-	, m_moveDeceleration( 100.0f )
+	, m_moveDeceleration( 1000000.0f )
 	, m_moveSpeedMax( 10.0f )
 	, m_moveAirControl( 0.1f )
 	, m_jumpSpeed( 5.0f )
@@ -137,9 +137,20 @@ void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, bool j
 		D3DXVECTOR3 velocityChangeInput( 0.0f, 0.0f, 0.0f );
 		velocityChangeInput += GetActorForwardVector() * moveForwardInput;
 		velocityChangeInput += GetActorRightVector() * moveRightInput;
-		D3DXVec3Normalize( &velocityChangeInput, &velocityChangeInput );
 
-		velocity += velocityChangeInput * m_moveAcceleration * controlFactor * deltaTime;
+		float speedInput = D3DXVec3Length( &velocityChangeInput );
+
+		D3DXVec3Normalize( &velocityChangeInput, &velocityChangeInput );
+		D3DXVECTOR3 velocityPendicularInput = Math::GetPerpendicularVector2d( velocityChangeInput );
+
+		float forwardSpeed = D3DXVec3Dot( &velocity, &velocityChangeInput );
+		float sideSpeed = D3DXVec3Dot( &velocity, &velocityPendicularInput );
+
+		forwardSpeed += speedInput * m_moveAcceleration * controlFactor * deltaTime;
+		sideSpeed = Math::InterpolateTo( sideSpeed, 0.0f, deltaTime, m_moveDeceleration );
+
+		velocity = velocityChangeInput * forwardSpeed + velocityPendicularInput * sideSpeed;
+	
 
 		if( m_moveSpeedMax > 0.0f && D3DXVec3Length( &velocity ) > m_moveSpeedMax )
 		{
