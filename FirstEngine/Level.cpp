@@ -8,6 +8,7 @@
 // TEMP STUFF
 #include "Car.h"
 #include "Game.h"
+#include "FreeCamera.h"
 #include "InputManager.h"
 #include "TestCameraPoint.h"
 #include "Tiger.h"
@@ -46,9 +47,11 @@ void Level::StartUp( Game* game )
 
 		//CreateObject< Car >();
 
-		CreateObject< Tiger >();
+		//CreateObject< Tiger >();
 
-		//CreateObject< TestCameraPoint >();
+		CreateObject< FreeCamera >();
+
+		CreateObject< TestCameraPoint >();
 	}
 	// TEMP END
 }

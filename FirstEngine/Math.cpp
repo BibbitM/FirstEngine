@@ -36,5 +36,5 @@ D3DXMATRIX Math::BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& ro
 
 D3DXVECTOR3 Math::GetPerpendicularVector2d( const D3DXVECTOR3& vector )
 {
-	return D3DXVECTOR3( -vector.y, 0.0f, vector.z );
+	return D3DXVECTOR3( vector.z, 0.0f, -vector.x );
 }

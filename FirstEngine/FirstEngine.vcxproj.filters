@@ -125,6 +125,9 @@
     <ClCompile Include="CollisionResult.cpp">
       <Filter>Source\Collisions</Filter>
     </ClCompile>
+    <ClCompile Include="FreeCamera.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -251,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="ShapeSphere.h">
       <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeCamera.h">
+      <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
