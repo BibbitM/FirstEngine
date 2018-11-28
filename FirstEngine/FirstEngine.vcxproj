@@ -193,6 +193,7 @@
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShapeAabb.cpp" />
+    <ClCompile Include="ShapePlane.cpp" />
     <ClCompile Include="ShapeSphere.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCameraPoint.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="ShapeAabb.h" />
+    <ClInclude Include="ShapePlane.h" />
     <ClInclude Include="ShapeSphere.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCameraPoint.h" />

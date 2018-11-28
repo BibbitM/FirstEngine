@@ -128,6 +128,9 @@
     <ClCompile Include="FreeCamera.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="ShapePlane.cpp">
+      <Filter>Source\Collisions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -257,6 +260,9 @@
     </ClInclude>
     <ClInclude Include="FreeCamera.h">
       <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapePlane.h">
+      <Filter>Source\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
