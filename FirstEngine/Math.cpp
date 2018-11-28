@@ -33,3 +33,8 @@ D3DXMATRIX Math::BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& ro
 
 	return worldMatrix = scalingMatrix * rotationMatrix * translationMatrix;
 }
+
+D3DXVECTOR3 Math::GetPerpendicularVector2d( const D3DXVECTOR3& vector )
+{
+	return D3DXVECTOR3( -vector.y, 0.0f, vector.z );
+}

@@ -45,6 +45,8 @@ namespace Math
 
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 
+	D3DXVECTOR3 GetPerpendicularVector2d( const D3DXVECTOR3& vector );
+
 	extern const D3DXVECTOR3 s_forwardVector3;
 	extern const D3DXVECTOR3 s_rightVector3;
 	extern const D3DXVECTOR3 s_upVector3;
