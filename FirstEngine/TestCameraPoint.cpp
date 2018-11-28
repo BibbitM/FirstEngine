@@ -1,8 +1,12 @@
 #include "TestCameraPoint.h"
 #include "CameraManager.h"
+#include "Collisions.h"
+#include "CollisionResult.h"
 #include "Game.h"
 #include "InputManager.h"
+#include "Math.h"
 #include "Level.h"
+#include "ShapePlane.h"
 
 TestCameraPoint::TestCameraPoint()
 {
@@ -24,13 +28,17 @@ void TestCameraPoint::OnUpdate( float deltaTime )
 	D3DXVECTOR3 cameraDir = camera->ScreenToDirection( mousePosX, mousePosY );
 	D3DXVECTOR3 cameraPos = camera->GetPosition();
 
-	D3DXVECTOR3 groundPos( 0.0f, 0.0f, 0.0f );
+	ShapePlane ground;
+	ground.m_point = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
+	ground.m_normal = Math::s_upVector3;
 
-	if( cameraDir.y < -0.01f && cameraPos.y > 0.0f ||
-		cameraDir.y > +0.01f && cameraPos.y < 0.0f )
+	CollisionResult collResult = {};
+
+	D3DXVECTOR3 groundPos( 0.0f, 0.0f, 0.f );
+
+	if( Collisions::LineTracePlane( collResult, cameraPos, cameraDir * 1000.0f, ground ) )
 	{
-		groundPos = cameraPos - cameraDir * ( cameraPos.y / cameraDir.y );
-		groundPos.y = 0.0f;
+		groundPos = collResult.m_position;
 
 		SetColor( 0xFF11CC11 );
 	}
