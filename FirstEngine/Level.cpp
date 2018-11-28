@@ -44,9 +44,9 @@ void Level::StartUp( Game* game )
 		GetGame()->GetInputManager()->SetLockCursor( true );
 		GetGame()->GetInputManager()->SetShowCursor( false );
 
-		CreateObject< Car >();
+		//CreateObject< Car >();
 
-		//CreateObject< Tiger >();
+		CreateObject< Tiger >();
 
 		//CreateObject< TestCameraPoint >();
 	}
