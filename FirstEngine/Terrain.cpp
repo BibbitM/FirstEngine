@@ -10,7 +10,6 @@
 #include <fstream>
 
 const std::string Terrain::s_boxMeshName = "Content\\unitbox.x";
-const std::string Terrain::s_planeMeshName = "Content\\plane.x";
 const std::string Terrain::s_grassTextureName = "Content\\GrassGreenTexture0002.jpg";
 const std::string Terrain::s_lavaTextureName = "Content\\lava.jpg";
 
@@ -24,7 +23,6 @@ Terrain::Terrain()
 Terrain::~Terrain()
 {
 	assert( !m_boxMesh );
-	assert( !m_planeMesh );
 	assert( !m_grassTexture );
 	assert( !m_lavaTexture );
 }
@@ -84,8 +82,11 @@ void Terrain::OnRender( FrameRenderer& frame ) const
 
 			if( height <= 0 )
 			{
-				D3DXMATRIX matLava = Math::BuildMatrix( position, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), D3DXVECTOR3( m_size, 1.0f, m_size ) );
-				frame.AddMesh( matLava, m_planeMesh, m_lavaTexture, 0xFFFFFFFF );
+				D3DXVECTOR3 center = position;
+				center.y -= 0.5f;
+
+				D3DXMATRIX matLava = Math::BuildMatrix( center, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), D3DXVECTOR3( m_size, 1.0f, m_size ) );
+				frame.AddMesh( matLava, m_boxMesh, m_lavaTexture, 0xFFFFFFFF );
 			}
 			else
 			{
@@ -137,7 +138,6 @@ void Terrain::LoadFromFile()
 void Terrain::LoadResources()
 {
 	assert( !m_boxMesh );
-	assert( !m_planeMesh );
 	assert( !m_grassTexture );
 	assert( !m_lavaTexture );
 	assert( IsInitialized() );
@@ -146,7 +146,6 @@ void Terrain::LoadResources()
 	TextureManager* textureMgr = GetLevel()->GetGame()->GetTextureManager();
 
 	m_boxMesh = meshMgr->LoadMesh( s_boxMeshName );
-	m_planeMesh = meshMgr->LoadMesh( s_planeMeshName );
 
 	m_grassTexture = textureMgr->LoadTexture( s_grassTextureName );
 	m_lavaTexture = textureMgr->LoadTexture( s_lavaTextureName );
@@ -169,12 +168,6 @@ void Terrain::UnloadResources()
 	{
 		textureMgr->UnloadTexture( m_grassTexture );
 		m_grassTexture.clear();
-	}
-
-	if( m_planeMesh )
-	{
-		meshMgr->UnloadMesh( m_planeMesh );
-		m_planeMesh.clear();
 	}
 
 	if( m_boxMesh )

@@ -51,12 +51,10 @@ private:
 	std::vector< int > m_tiles;
 
 	Mesh m_boxMesh;
-	Mesh m_planeMesh;
 	Texture m_grassTexture;
 	Texture m_lavaTexture;
 
 	static const std::string s_boxMeshName;
-	static const std::string s_planeMeshName;
 	static const std::string s_grassTextureName;
 	static const std::string s_lavaTextureName;
 
