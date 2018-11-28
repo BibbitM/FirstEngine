@@ -1,4 +1,4 @@
-#include "Camera.h"
+#include "CarCamera.h"
 #include "Actor.h"
 #include "CameraManager.h"
 #include "Game.h"
@@ -6,7 +6,7 @@
 #include "Level.h"
 #include "Math.h"
 
-Camera::Camera()
+CarCamera::CarCamera()
 	: m_target( nullptr )
 	, m_previousTargetPosition( 0.0f, 0.0f, 0.0f )
 	, m_previousTargetPositionSet( false )
@@ -25,15 +25,15 @@ Camera::Camera()
 {
 }
 
-Camera::~Camera() = default;
+CarCamera::~CarCamera() = default;
 
-void Camera::SetTarget( const Actor* target )
+void CarCamera::SetTarget( const Actor* target )
 {
 	m_target = target;
 	m_previousTargetPositionSet = false;
 }
 
-D3DXVECTOR3 Camera::GetTargetPosition() const
+D3DXVECTOR3 CarCamera::GetTargetPosition() const
 {
 	if (m_target)
 	{
@@ -47,14 +47,14 @@ D3DXVECTOR3 Camera::GetTargetPosition() const
 	}
 }
 
-void Camera::OnUpdate( float deltaTime )
+void CarCamera::OnUpdate( float deltaTime )
 {
 	UpdateCamera( deltaTime );
 
 	Object::OnUpdate( deltaTime );
 }
 
-void Camera::UpdateCamera( float deltaTime )
+void CarCamera::UpdateCamera( float deltaTime )
 {
 	Input input = GetInput( deltaTime );
 
@@ -71,7 +71,7 @@ void Camera::UpdateCamera( float deltaTime )
 	StoreTargetPosition();
 }
 
-Camera::Input Camera::GetInput( float deltaTime ) const
+CarCamera::Input CarCamera::GetInput( float deltaTime ) const
 {
 	const InputManager* inputMgr = GetLevel()->GetGame()->GetInputManager();
 
@@ -108,7 +108,7 @@ Camera::Input Camera::GetInput( float deltaTime ) const
 	return input;
 }
 
-void Camera::UpdateYawFromTargetMovement()
+void CarCamera::UpdateYawFromTargetMovement()
 {
 	if( !m_previousTargetPositionSet )
 	{
@@ -136,30 +136,30 @@ void Camera::UpdateYawFromTargetMovement()
 	UpdateYaw( yawChange );
 }
 
-void Camera::UpdateYaw( float yawInput )
+void CarCamera::UpdateYaw( float yawInput )
 {
 	m_yaw = fmodf( m_yaw + yawInput, 360.0f );
 }
 
-void Camera::UpdatePitch( float pitchInput )
+void CarCamera::UpdatePitch( float pitchInput )
 {
 	m_pitch = Math::Clamp( m_pitch + pitchInput, -89.0f, +89.0f );
 }
 
-void Camera::UpdateDistance( float deltaTime, float distanceInput )
+void CarCamera::UpdateDistance( float deltaTime, float distanceInput )
 {
 	m_wantedDistance = Math::Clamp( m_wantedDistance + distanceInput, m_distanceMin, m_distanceMax );
 
 	m_currentDistance = Math::InterpolateTo( m_currentDistance, m_wantedDistance, deltaTime, m_distanceChangeSpeed );
 }
 
-void Camera::StoreTargetPosition()
+void CarCamera::StoreTargetPosition()
 {
 	m_previousTargetPosition = GetTargetPosition();
 	m_previousTargetPositionSet = true;
 }
 
-void Camera::SetCamera()
+void CarCamera::SetCamera()
 {
 	D3DXVECTOR3 direction = GetCameraDirection();
 	D3DXVECTOR3 position = GetTargetPosition() - direction * m_currentDistance;
@@ -168,7 +168,7 @@ void Camera::SetCamera()
 	cameraManger->SetPositionDirection( position, direction );
 }
 
-D3DXVECTOR3 Camera::GetCameraDirection() const
+D3DXVECTOR3 CarCamera::GetCameraDirection() const
 {
 	D3DXMATRIX matCamera;
 	D3DXMatrixRotationYawPitchRoll( &matCamera, Math::Deg2Rad( m_yaw ), Math::Deg2Rad( m_pitch ), 0.0f );

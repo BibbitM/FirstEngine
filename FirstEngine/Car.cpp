@@ -1,5 +1,5 @@
 #include "Car.h"
-#include "Camera.h"
+#include "CarCamera.h"
 #include "Game.h"
 #include "InputManager.h"
 #include "Level.h"
@@ -29,7 +29,7 @@ void Car::OnStartUp()
 	Character::OnStartUp();
 
 	// Create camera.
-	m_camera = GetLevel()->CreateObject< Camera >( [ this ]( auto camera ) {
+	m_camera = GetLevel()->CreateObject< CarCamera >( [ this ]( auto camera ) {
 		camera->SetTarget( this );
 	} );
 

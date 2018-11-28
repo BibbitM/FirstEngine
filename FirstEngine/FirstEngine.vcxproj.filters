@@ -98,9 +98,6 @@
     <ClCompile Include="Tiger.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="TestCameraPoint.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
@@ -108,6 +105,9 @@
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Car.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="CarCamera.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -213,9 +213,6 @@
     <ClInclude Include="Tiger.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="TestCameraPoint.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
@@ -223,6 +220,9 @@
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Car.h">
+      <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="CarCamera.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
