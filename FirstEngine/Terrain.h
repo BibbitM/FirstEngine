@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+class ShapeAabb;
 struct D3DXCOLOR;
 struct D3DXVECTOR3;
 
@@ -21,6 +22,10 @@ public:
 
 	float GetHeight( float x, float y ) const;
 	float GetHeight( const D3DXVECTOR3& pos ) const;
+
+	int GetCount() const { return m_count; }
+
+	ShapeAabb GetCollisionShape( int x, int z ) const;
 
 protected:
 	virtual void OnStartUp() override;

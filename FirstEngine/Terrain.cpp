@@ -4,6 +4,7 @@
 #include "Level.h"
 #include "Math.h"
 #include "MeshManager.h"
+#include "ShapeAabb.h"
 #include "TextureManager.h"
 #include <cassert>
 #include <d3dx9math.h>
@@ -52,6 +53,22 @@ float Terrain::GetHeight( float x, float z ) const
 float Terrain::GetHeight( const D3DXVECTOR3& pos ) const
 {
 	return GetHeight( pos.x, pos.z );
+}
+
+ShapeAabb Terrain::GetCollisionShape( int x, int z ) const
+{
+	const int index = GetIndex( x, z );
+
+	if( index < 0 )
+	{
+		return ShapeAabb();
+	}
+
+	ShapeAabb shape;
+	shape.m_origin = GetPosition( x, z );
+	shape.m_halfSize = D3DXVECTOR3( m_size * 0.5f, m_height * 0.5f, m_size * 0.5f );
+
+	return shape;
 }
 
 void Terrain::OnStartUp()
@@ -212,10 +229,10 @@ D3DXVECTOR3 Terrain::GetPosition( int x, int z ) const
 	assert( x >= 0 && x < m_count );
 	assert( z >= 0 && z < m_count );
 
-	return GetCorner() + D3DXVECTOR3( m_size * ( x + 0.5f ) , 0.0f, m_size * ( z + 0.5f ) );
+	return GetCorner() + D3DXVECTOR3( m_size * ( x + 0.5f ), 0.0f, m_size * ( z + 0.5f ) );
 }
 
 D3DXCOLOR Terrain::GetColorForHeight( float height )
 {
-	return Math::Lerp( D3DXCOLOR( 0xFFFF2222 ), D3DXCOLOR( 0xFFFFFFFF ), Math::Clamp( Math::Square( height / 2.0f ), 0.0f, 1.0f ) );
+	return Math::Lerp( D3DXCOLOR( 0xFFFF2222 ), D3DXCOLOR( 0xFFFFFFFF ), Math::Clamp( Math::Square( height * 0.5f ), 0.0f, 1.0f ) );
 }
