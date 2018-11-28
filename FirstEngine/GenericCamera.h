@@ -5,11 +5,11 @@
 
 class Actor;
 
-class CarCamera : public Object
+class GenericCamera : public Object
 {
 public:
-	CarCamera();
-	~CarCamera();
+	GenericCamera();
+	~GenericCamera();
 
 	const Actor* GetTarget() const { return m_target; }
 

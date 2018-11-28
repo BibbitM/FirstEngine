@@ -1,5 +1,5 @@
 #include "Tiger.h"
-#include "CarCamera.h"
+#include "GenericCamera.h"
 #include "Game.h"
 #include "InputManager.h"
 #include "Level.h"
@@ -30,7 +30,7 @@ void Tiger::OnStartUp()
 {
 	Character::OnStartUp();
 
-	m_camera = GetLevel()->CreateObject< CarCamera >( [this]( auto camera ) {
+	m_camera = GetLevel()->CreateObject< GenericCamera >( [this]( auto camera ) {
 		camera->SetTarget( this );
 	} );
 }

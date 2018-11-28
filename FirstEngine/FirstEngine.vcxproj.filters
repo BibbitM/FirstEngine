@@ -107,7 +107,7 @@
     <ClCompile Include="Car.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="CarCamera.cpp">
+    <ClCompile Include="GenericCamera.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,7 +222,7 @@
     <ClInclude Include="Car.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="CarCamera.h">
+    <ClInclude Include="GenericCamera.h">
       <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>

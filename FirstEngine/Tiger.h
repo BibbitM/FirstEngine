@@ -2,7 +2,7 @@
 
 #include "Character.h"
 
-class CarCamera;
+class GenericCamera;
 
 class Tiger : public Character
 {
@@ -30,7 +30,7 @@ private:
 	void UpdateMovement( float moveForwardInput, float moveRightInput, bool jumpInput, float deltaTime );
 	void UpdateRotation( float rotationInput, float deltaTime );
 
-	CarCamera* m_camera;
+	GenericCamera* m_camera;
 
 	float m_moveAcceleration;
 	float m_moveDeceleration;
