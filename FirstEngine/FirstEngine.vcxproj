@@ -191,6 +191,7 @@
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pawn.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShapeAabb.cpp" />
     <ClCompile Include="ShapePlane.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="FrameRenderer.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pawn.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="ShapeAabb.h" />
     <ClInclude Include="ShapePlane.h" />
     <ClInclude Include="ShapeSphere.h" />

@@ -131,6 +131,9 @@
     <ClCompile Include="ShapePlane.cpp">
       <Filter>Source\Collisions</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -263,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="ShapePlane.h">
       <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
