@@ -5,6 +5,7 @@
 #include "InputManager.h"
 #include "Level.h"
 #include "Math.h"
+#include "Projectile.h"
 
 FreeCamera::FreeCamera()
 	: m_yaw( 0.0f )
@@ -36,6 +37,11 @@ void FreeCamera::UpdateCamera( float deltaTime )
 	UpdatePitch( input.pitch );
 
 	UpdateMovement( input.moveForward, input.moveRight, input.moveUp, deltaTime );
+
+	if( input.fireProjectile )
+	{
+		FireProjectile();
+	}
 
 	SetCamera();
 }
@@ -101,6 +107,11 @@ FreeCamera::Input FreeCamera::GetInput( float deltaTime ) const
 	}
 
 
+	if( inputMgr->IsKeyJustPressed( MK_LBUTTON ) )
+	{
+		input.fireProjectile = true;
+	}
+
 
 	return input;
 }
@@ -125,6 +136,18 @@ void FreeCamera::UpdateMovement( float moveForwardInput, float moveRightInput, f
 	m_position += forward * moveForwardInput * deltaTime * m_moveSpeed;
 	m_position += right * moveRightInput * deltaTime * m_moveSpeed;
 	m_position += up * moveUpInput * deltaTime * m_moveSpeed;
+}
+
+void FreeCamera::FireProjectile()
+{
+	GetLevel()->CreateObject< Projectile >( [ this ]( auto projectile )
+	{
+		projectile->SetRadius( 0.5f );
+		projectile->SetGravityFactor( 1.0f );
+		projectile->SetLifeTime( 5.0f );
+		projectile->SetActorPosition( m_position );
+		projectile->SetVelocity( GetCameraDirection() * 25.0f );
+	} );
 }
 
 void FreeCamera::SetCamera()

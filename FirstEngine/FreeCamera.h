@@ -20,6 +20,8 @@ private:
 		float moveForward;
 		float moveRight;
 		float moveUp;
+
+		bool fireProjectile;
 	};
 
 	void UpdateCamera( float deltaTime );
@@ -27,6 +29,8 @@ private:
 	void UpdateYaw( float yawInput );
 	void UpdatePitch( float pitchInput );
 	void UpdateMovement( float moveForwardInput, float moveRightInput, float moveUpInput, float deltaTime );
+
+	void FireProjectile();
 
 	void SetCamera();
 	D3DXVECTOR3 GetCameraDirection() const;
