@@ -17,9 +17,11 @@ public:
 	D3DXMATRIX GetActorLocalMatrix() const;
 	D3DXMATRIX GetActorWorldMatrix() const;
 
-	D3DXVECTOR3 GetActorForwardVector() const;
-	D3DXVECTOR3 GetActorRightVector() const;
-	D3DXVECTOR3 GetActorUpVector() const;
+	D3DXVECTOR3 GetActorWorldForwardVector() const;
+	D3DXVECTOR3 GetActorWorldRightVector() const;
+	D3DXVECTOR3 GetActorWorldUpVector() const;
+
+	D3DXVECTOR3 GetActorWorldPosition() const;
 
 	void SetActorPosition( const D3DXVECTOR3& position ) { m_position = position; }
 	void SetActorRotation( const D3DXVECTOR3& rotation ) { m_rotation = rotation; }

@@ -135,8 +135,8 @@ void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, bool j
 	else
 	{
 		D3DXVECTOR3 velocityChangeInput( 0.0f, 0.0f, 0.0f );
-		velocityChangeInput += GetActorForwardVector() * moveForwardInput;
-		velocityChangeInput += GetActorRightVector() * moveRightInput;
+		velocityChangeInput += GetActorWorldForwardVector() * moveForwardInput;
+		velocityChangeInput += GetActorWorldRightVector() * moveRightInput;
 
 		float speedInput = D3DXVec3Length( &velocityChangeInput );
 

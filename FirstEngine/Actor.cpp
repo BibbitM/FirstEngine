@@ -33,7 +33,7 @@ D3DXMATRIX Actor::GetActorWorldMatrix() const
 	}
 }
 
-D3DXVECTOR3 Actor::GetActorForwardVector() const
+D3DXVECTOR3 Actor::GetActorWorldForwardVector() const
 {
 	D3DXMATRIX matWorld = GetActorWorldMatrix();
 	D3DXVECTOR3 forward;
@@ -41,7 +41,7 @@ D3DXVECTOR3 Actor::GetActorForwardVector() const
 	return forward;
 }
 
-D3DXVECTOR3 Actor::GetActorRightVector() const
+D3DXVECTOR3 Actor::GetActorWorldRightVector() const
 {
 	D3DXMATRIX matWorld = GetActorWorldMatrix();
 	D3DXVECTOR3 right;
@@ -49,12 +49,20 @@ D3DXVECTOR3 Actor::GetActorRightVector() const
 	return right;
 }
 
-D3DXVECTOR3 Actor::GetActorUpVector() const
+D3DXVECTOR3 Actor::GetActorWorldUpVector() const
 {
 	D3DXMATRIX matWorld = GetActorWorldMatrix();
 	D3DXVECTOR3 up;
 	D3DXVec3TransformNormal( &up, &Math::s_upVector3, &matWorld );
 	return up;
+}
+
+D3DXVECTOR3 Actor::GetActorWorldPosition() const
+{
+	D3DXMATRIX matWorld = GetActorWorldMatrix();
+	D3DXVECTOR3 worldPos;
+	D3DXVec3TransformCoord( &worldPos, &Math::s_zeroVector3, &matWorld );
+	return worldPos;
 }
 
 bool Actor::IsAttachedTo( const Actor* parentToTest ) const

@@ -50,4 +50,5 @@ namespace Math
 	extern const D3DXVECTOR3 s_forwardVector3;
 	extern const D3DXVECTOR3 s_rightVector3;
 	extern const D3DXVECTOR3 s_upVector3;
+	extern const D3DXVECTOR3 s_zeroVector3;
 }

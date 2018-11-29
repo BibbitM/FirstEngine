@@ -127,8 +127,8 @@ void Car::UpdateMovement( float moveForwardInput, float deltaTime )
 
 	if( GetTouchesGround() )
 	{
-		const D3DXVECTOR3 actorForward = GetActorForwardVector();
-		const D3DXVECTOR3 actorRight = GetActorRightVector();
+		const D3DXVECTOR3 actorForward = GetActorWorldForwardVector();
+		const D3DXVECTOR3 actorRight = GetActorWorldRightVector();
 
 		float forwardSpeed = D3DXVec3Dot( &actorForward, &GetVelocity() );	
 		float rightSpeed = D3DXVec3Dot( &actorRight, &GetVelocity() );
@@ -191,7 +191,7 @@ void Car::UpdateRotation( float rotationInput, float deltaTime )
 
 	float sign = 1.0f;
 
-	const D3DXVECTOR3 actorForward = GetActorForwardVector();
+	const D3DXVECTOR3 actorForward = GetActorWorldForwardVector();
 	if( D3DXVec3Dot( &actorForward, &GetVelocity() ) < 0 )
 	{
 		// Moving backwards.

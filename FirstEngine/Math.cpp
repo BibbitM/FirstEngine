@@ -5,7 +5,7 @@
 const D3DXVECTOR3 Math::s_forwardVector3( 0.0f, 0.0f, 1.0f );
 const D3DXVECTOR3 Math::s_rightVector3( 1.0f, 0.0f, 0.0f );
 const D3DXVECTOR3 Math::s_upVector3( 0.0f, 1.0f, 0.0f );
-
+const D3DXVECTOR3 Math::s_zeroVector3( 0.0f, 0.0f, 0.0f );
 
 float Math::Rad2Deg( float rad )
 {
