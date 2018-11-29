@@ -121,5 +121,9 @@ bool Projectile::GetNearestCollision( CollisionResult& result ) const
 	ground.m_point = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	ground.m_normal = Math::s_upVector3;
 
+	// TODO: Check collision with terrain
+	// - for all relevant terrain cells check collision
+	// - select collision with closer distance
+
 	return Collisions::CheckCollisonSpherePlane( result, mySphere, ground );
 }
