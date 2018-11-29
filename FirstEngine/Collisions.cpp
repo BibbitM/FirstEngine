@@ -49,7 +49,19 @@ bool Collisions::CheckCollisonSphereSphere( CollisionResult& result, const Shape
 
 bool Collisions::CheckCollisonSpherePlane( CollisionResult& result, const ShapeSphere& mySphere, const ShapePlane& otherPlane )
 {
-	return false;
+	D3DXVECTOR3 planeToSphere = mySphere.m_center - otherPlane.m_point;
+
+	float distToPlane = D3DXVec3Dot( &planeToSphere, &otherPlane.m_normal );
+
+	if( distToPlane > mySphere.m_radius )
+	{
+		return false;
+	}
+
+	result.m_normal = otherPlane.m_normal;
+	result.m_position = mySphere.m_center - otherPlane.m_normal * distToPlane;
+
+	return true;
 }
 
 bool Collisions::CheckCollisonSphereAabb( CollisionResult& result, const ShapeSphere& mySphere, const ShapeAabb& otherAabb )
