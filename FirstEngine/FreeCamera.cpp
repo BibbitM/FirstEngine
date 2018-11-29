@@ -51,11 +51,11 @@ FreeCamera::Input FreeCamera::GetInput( float deltaTime ) const
 
 	if( inputMgr->IsKeyPressed( VK_LEFT ) )
 	{
-		input.yaw += 1.0f * m_baseYawSpeed * deltaTime;
+		input.yaw -= 1.0f * m_baseYawSpeed * deltaTime;
 	}
 	if( inputMgr->IsKeyPressed( VK_RIGHT ) )
 	{
-		input.yaw -= 1.0f * m_baseYawSpeed * deltaTime;
+		input.yaw += 1.0f * m_baseYawSpeed * deltaTime;
 	}
 
 
