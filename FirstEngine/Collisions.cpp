@@ -34,16 +34,19 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 
 bool Collisions::LineTraceSphere( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeAabb& aabb )
 {
+	// TODO:
 	return false;
 }
 
 bool Collisions::LineTraceAabb( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeAabb& aabb )
 {
+	// TODO:
 	return false;
 }
 
 bool Collisions::CheckCollisonSphereSphere( CollisionResult& result, const ShapeSphere& mySphere, const ShapeSphere& otherAabb )
 {
+	// TODO:
 	return false;
 }
 
@@ -66,5 +69,6 @@ bool Collisions::CheckCollisonSpherePlane( CollisionResult& result, const ShapeS
 
 bool Collisions::CheckCollisonSphereAabb( CollisionResult& result, const ShapeSphere& mySphere, const ShapeAabb& otherAabb )
 {
+	// TODO:
 	return false;
 }

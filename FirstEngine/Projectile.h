@@ -35,7 +35,7 @@ private:
 	float m_radius;
 	float m_lifeTime;
 	float m_gravityFactor;
-	//float m_bounceFactor; //< TODO
+	//float m_bounceFactor; //< TODO Set/Get and UpdateCollision
 
 	float m_lifeTimeConsumed;
 

@@ -140,6 +140,9 @@ void FreeCamera::UpdateMovement( float moveForwardInput, float moveRightInput, f
 
 void FreeCamera::FireProjectile()
 {
+	// TODO: 1. Add spread angle to simulate accuracy
+	// TODO: 2. Temporary increase spread after every shot.
+	// TOOD: 3. Display crosshair showing current accuracy
 	GetLevel()->CreateObject< Projectile >( [ this ]( auto projectile )
 	{
 		projectile->SetRadius( 0.5f );
