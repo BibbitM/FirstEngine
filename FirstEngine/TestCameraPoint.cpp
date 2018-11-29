@@ -32,7 +32,7 @@ void TestCameraPoint::OnUpdate( float deltaTime )
 	ground.m_point = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	ground.m_normal = Math::s_upVector3;
 
-	CollisionResult collResult = {};
+	CollisionResult collResult;
 
 	D3DXVECTOR3 groundPos( 0.0f, 0.0f, 0.f );
 
