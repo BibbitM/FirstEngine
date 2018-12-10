@@ -2,6 +2,7 @@
 
 #include "Pawn.h"
 
+class Level;
 class ShapeAabb;
 class ShapePlane;
 class ShapeSphere;
@@ -23,6 +24,8 @@ public:
 	ShapePlane GetCollisionPlane() const;
 	ShapeSphere GetCollisionSphere() const;
 	ShapeAabb GetCollisionAabb() const;
+
+	static void CreateTestObjects( Level& level );
 
 private:
 	Collisions::EShape m_shape;

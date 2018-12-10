@@ -11,6 +11,7 @@
 #include "FreeCamera.h"
 #include "InputManager.h"
 #include "TestCameraPoint.h"
+#include "TestCollisionShape.h"
 #include "Tiger.h"
 // TEMP END
 
@@ -52,6 +53,8 @@ void Level::StartUp( Game* game )
 		CreateObject< FreeCamera >();
 
 		CreateObject< TestCameraPoint >();
+
+		TestCollisionShape::CreateTestObjects( *this );
 	}
 	// TEMP END
 }

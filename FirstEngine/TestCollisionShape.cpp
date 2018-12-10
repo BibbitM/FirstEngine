@@ -1,5 +1,6 @@
 #include "TestCollisionShape.h"
 #include "Collisions.h"
+#include "Level.h"
 #include "ShapeAabb.h"
 #include "ShapePlane.h"
 #include "ShapeSphere.h"
@@ -48,7 +49,7 @@ ShapeSphere TestCollisionShape::GetCollisionSphere() const
 
 	ShapeSphere sphere;
 	sphere.m_center = GetActorWorldPosition();
-	sphere.m_radius = 50.0f * GetActorScale().x;
+	sphere.m_radius = 0.5f * GetActorScale().x;
 	return sphere;
 }
 
@@ -58,6 +59,21 @@ ShapeAabb TestCollisionShape::GetCollisionAabb() const
 
 	ShapeAabb aabb;
 	aabb.m_origin = GetActorWorldPosition();
-	aabb.m_halfSize = 50.0f * GetActorScale();
+	aabb.m_halfSize = 0.5f * GetActorScale();
 	return aabb;
+}
+
+void TestCollisionShape::CreateTestObjects( Level& level )
+{
+	level.CreateObject< TestCollisionShape >( [] ( auto object )
+	{
+		object->SetShape( Collisions::EShape::Sphere );
+		object->SetActorScale( D3DXVECTOR3( 2.0f, 2.0f, 2.0f ) );
+	} );
+
+	level.CreateObject< TestCollisionShape >( []( auto object ) {
+		object->SetShape( Collisions::EShape::Sphere );
+		object->SetActorPosition( D3DXVECTOR3( 0.0f, 1.0f, 5.0f ) );
+		object->SetActorScale( D3DXVECTOR3( 1.0f, 1.0f, 1.0f ) );
+	} );
 }
