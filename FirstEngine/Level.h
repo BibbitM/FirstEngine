@@ -38,6 +38,10 @@ public:
 
 	Terrain* GetTerrain() const;
 
+	const std::vector< Object* > GetAllObjects() const { return m_objects; }
+	template< class TObject >
+	std::vector< TObject* > GetObjectsFromClass() const;
+
 private:
 	void LoadTerrain();
 
@@ -67,4 +71,18 @@ TObject* Level::CreateObject( TInitFunc initFunc )
 	initFunc( object );
 	object->StartUp( this );
 	return object;
+}
+
+template< class TObject >
+std::vector< TObject* > Level::GetObjectsFromClass() const
+{
+	std::vector< TObject* > objectsFromClass;
+	for ( auto obj : m_objects )
+	{
+		if ( TObject* objFromClass = dynamic_cast< TObject* >( obj ) )
+		{
+			objectsFromClass.push_back( objFromClass );
+		}
+	}
+	return objectsFromClass;
 }
