@@ -9,6 +9,13 @@ struct D3DXVECTOR3;
 
 namespace Collisions
 {
+	enum class EShape
+	{
+		Plane,
+		Sphere,
+		Aabb,
+	};
+
 	/// Checks collision between line and plane.
 	bool LineTracePlane( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapePlane& plane );
 	/// Checks collision between line and sphere.

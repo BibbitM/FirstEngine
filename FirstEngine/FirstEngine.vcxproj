@@ -198,6 +198,7 @@
     <ClCompile Include="ShapeSphere.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TestCameraPoint.cpp" />
+    <ClCompile Include="TestCollisionShape.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tiger.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="ShapeSphere.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TestCameraPoint.h" />
+    <ClInclude Include="TestCollisionShape.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LineRenderer.h" />
