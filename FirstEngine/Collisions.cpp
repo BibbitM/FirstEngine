@@ -32,7 +32,7 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 	return true;
 }
 
-bool Collisions::LineTraceSphere( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeAabb& aabb )
+bool Collisions::LineTraceSphere( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeSphere& sphere )
 {
 	// TODO:
 	return false;
