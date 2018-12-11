@@ -25,6 +25,9 @@ public:
 
 	int GetCount() const { return m_count; }
 
+	int GetX( float x ) const;
+	int GetZ( float z ) const;
+
 	ShapeAabb GetCollisionShape( int x, int z ) const;
 
 protected:
@@ -38,6 +41,7 @@ private:
 	void UnloadResources();
 
 	float GetHeight( int index ) const;
+	float GetHeight( int x, int z ) const { return GetHeight( GetIndex( x, z ) ); }
 
 	int GetIndex( float x, float z ) const;
 	int GetIndex( int x, int z ) const;

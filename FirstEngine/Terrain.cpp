@@ -64,9 +64,12 @@ ShapeAabb Terrain::GetCollisionShape( int x, int z ) const
 		return ShapeAabb();
 	}
 
+	float height = GetHeight( index );
+
 	ShapeAabb shape;
 	shape.m_origin = GetPosition( x, z );
-	shape.m_halfSize = D3DXVECTOR3( m_size * 0.5f, m_height * 0.5f, m_size * 0.5f );
+	shape.m_origin.y -= height * 0.5f;
+	shape.m_halfSize = D3DXVECTOR3( m_size * 0.5f, height * 0.5f, m_size * 0.5f );
 
 	return shape;
 }
@@ -108,7 +111,7 @@ void Terrain::OnRender( FrameRenderer& frame ) const
 			else
 			{
 				D3DXVECTOR3 center = position;
-				center.y += height * 0.5f;
+				center.y -= height * 0.5f;
 
 				D3DXMATRIX matBox = Math::BuildMatrix( center, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ), D3DXVECTOR3( m_size, height, m_size ) );
 				frame.AddMesh( matBox, m_boxMesh, m_grassTexture, GetColorForHeight( height ) );
@@ -204,6 +207,24 @@ int Terrain::GetIndex( float x, float z ) const
 	return GetIndex( static_cast< int >( floor( x / m_size ) ), static_cast< int >( floor( z / m_size ) ) );
 }
 
+int Terrain::GetX( float x ) const
+{
+	D3DXVECTOR3 corner = GetCorner();
+
+	x -= corner.x;
+
+	return static_cast< int >( floor( x / m_size ) );
+}
+
+int Terrain::GetZ( float z ) const
+{
+	D3DXVECTOR3 corner = GetCorner();
+
+	z -= corner.z;
+
+	return static_cast< int >( floor( z / m_size ) );
+}
+
 int Terrain::GetIndex( int x, int z ) const
 {
 	if( x < 0 || x >= m_count )
@@ -229,7 +250,7 @@ D3DXVECTOR3 Terrain::GetPosition( int x, int z ) const
 	assert( x >= 0 && x < m_count );
 	assert( z >= 0 && z < m_count );
 
-	return GetCorner() + D3DXVECTOR3( m_size * ( x + 0.5f ), 0.0f, m_size * ( z + 0.5f ) );
+	return GetCorner() + D3DXVECTOR3( m_size * ( x + 0.5f ), GetHeight( GetIndex( x, z ) ), m_size * ( z + 0.5f ) );
 }
 
 D3DXCOLOR Terrain::GetColorForHeight( float height )
