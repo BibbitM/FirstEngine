@@ -148,12 +148,9 @@ bool Collisions::LineTraceAabb( CollisionResult& result, const D3DXVECTOR3& star
 
 	// Fill the result.
 	result.m_position = start + direction * t;
-	if     ( t == t1 )	{ result.m_normal = D3DXVECTOR3( -1.0f, 0.0f, 0.0f ); }
-	else if( t == t2 )	{ result.m_normal = D3DXVECTOR3( +1.0f, 0.0f, 0.0f ); }
-	else if( t == t3 )	{ result.m_normal = D3DXVECTOR3( 0.0f, -1.0f, 0.0f ); }
-	else if( t == t4 )	{ result.m_normal = D3DXVECTOR3( 0.0f, +1.0f, 0.0f ); }
-	else if( t == t5 )	{ result.m_normal = D3DXVECTOR3( 0.0f, 0.0f, -1.0f ); }
-	else				{ result.m_normal = D3DXVECTOR3( 0.0f, 0.0f, +1.0f ); }
+	if     ( t == t1 || t == t2 ) { result.m_normal = D3DXVECTOR3( -Math::Sign( direction.x ), 0.0f, 0.0f ); }
+	else if( t == t3 || t == t4 ) { result.m_normal = D3DXVECTOR3( 0.0f, -Math::Sign( direction.y ), 0.0f ); }
+	else   /*t == t5 || t == t6*/ { result.m_normal = D3DXVECTOR3( 0.0f, 0.0f, -Math::Sign( direction.z ) ); }
 
 	return true;
 }
