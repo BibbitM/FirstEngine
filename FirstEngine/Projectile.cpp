@@ -7,6 +7,7 @@
 #include "ShapePlane.h"
 #include "ShapeSphere.h"
 #include "Terrain.h"
+#include "TestCollisionShape.h"
 #include <algorithm>
 
 #ifdef max
@@ -112,18 +113,91 @@ void Projectile::UpdateLifetTime( float deltaTime )
 	}
 }
 
-bool Projectile::GetNearestCollision( CollisionResult& result ) const
+bool Projectile::GetNearestCollision( CollisionResult& collision ) const
 {
 	ShapeSphere mySphere = GetCollisionSphere();
+	bool result = false;
+	float nearestCollisionDistanceSq = FLT_MAX;
 
-	// Collision with ground.
+	CollisionResult groundCollision;
+	if( GetCollisionWithGround( groundCollision, mySphere ) )
+	{
+		result |= true;
+
+		D3DXVECTOR3 collisionOffset = groundCollision.m_position - mySphere.m_center;
+		float collisionDistanceSq = D3DXVec3LengthSq( &collisionOffset );
+		if( collisionDistanceSq < nearestCollisionDistanceSq )
+		{
+			nearestCollisionDistanceSq = collisionDistanceSq;
+			collision = groundCollision;
+		}
+	}
+
+	CollisionResult testShapesCollision;
+	if( GetNearestCollisionWithTestShapes( testShapesCollision, mySphere ) )
+	{
+		result |= true;
+
+		D3DXVECTOR3 collisionOffset = testShapesCollision.m_position - mySphere.m_center;
+		float collisionDistanceSq = D3DXVec3LengthSq( &collisionOffset );
+		if( collisionDistanceSq < nearestCollisionDistanceSq )
+		{
+			nearestCollisionDistanceSq = collisionDistanceSq;
+			collision = testShapesCollision;
+		}
+	}
+
+	return result;
+}
+
+bool Projectile::GetCollisionWithGround( CollisionResult& collision, const ShapeSphere& mySphere ) const
+{
+	// Ground shape.
 	ShapePlane ground;
 	ground.m_point = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	ground.m_normal = Math::s_upVector3;
 
-	// TODO: Check collision with terrain
-	// - for all relevant terrain cells check collision
-	// - select collision with closer distance
+	return Collisions::CheckCollisonSpherePlane( collision, mySphere, ground );
+}
 
-	return Collisions::CheckCollisonSpherePlane( result, mySphere, ground );
+bool Projectile::GetNearestCollisionWithTestShapes( CollisionResult& collision, const ShapeSphere& mySphere ) const
+{
+	bool result = false;
+	float nearestCollisionDistanceSq = FLT_MAX;
+
+	std::vector< TestCollisionShape* > collisionShapes = GetLevel()->GetObjectsFromClass< TestCollisionShape >();
+
+	for( auto shape : collisionShapes )
+	{
+		CollisionResult shapeCollision;
+		if( GetCollisionWithTestShape( shapeCollision, mySphere, *shape ) )
+		{
+			result |= true;
+
+			D3DXVECTOR3 collisionOffset = shapeCollision.m_position - mySphere.m_center;
+			float collisionDistanceSq = D3DXVec3LengthSq( &collisionOffset );
+			if( collisionDistanceSq < nearestCollisionDistanceSq )
+			{
+				nearestCollisionDistanceSq = collisionDistanceSq;
+				collision = shapeCollision;
+			}
+		}
+	}
+
+	return result;
+}
+
+bool Projectile::GetCollisionWithTestShape( CollisionResult& collision, const ShapeSphere& mySphere, const TestCollisionShape& shape ) const
+{
+	switch( shape.GetShape() )
+	{
+	case Collisions::EShape::Plane:
+		return Collisions::CheckCollisonSpherePlane( collision, mySphere, shape.GetCollisionPlane() );
+	case Collisions::EShape::Sphere:
+		return Collisions::CheckCollisonSphereSphere( collision, mySphere, shape.GetCollisionSphere() );
+	case Collisions::EShape::Aabb:
+		return Collisions::CheckCollisonSphereAabb( collision, mySphere, shape.GetCollisionAabb() );
+	default:
+		return false;
+	}
 }

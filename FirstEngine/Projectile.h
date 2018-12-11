@@ -4,6 +4,7 @@
 
 class CollisionResult;
 class ShapeSphere;
+class TestCollisionShape;
 
 class Projectile : public Character
 {
@@ -29,7 +30,10 @@ protected:
 	void UpdateCollision();
 	void UpdateLifetTime( float deltaTime );
 
-	bool GetNearestCollision( CollisionResult& result ) const;
+	bool GetNearestCollision( CollisionResult& collision ) const;
+	bool GetCollisionWithGround( CollisionResult& collision, const ShapeSphere& mySphere ) const;
+	bool GetNearestCollisionWithTestShapes( CollisionResult& collision, const ShapeSphere& mySphere ) const;
+	bool GetCollisionWithTestShape( CollisionResult& collision, const ShapeSphere& mySphere, const TestCollisionShape& shape ) const;
 
 private:
 	float m_radius;
