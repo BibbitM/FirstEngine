@@ -43,6 +43,12 @@ namespace Math
 		return val * val;
 	}
 
+	template< class T >
+	constexpr T Sign( const T& val )
+	{
+		return val < T( 0 ) ? T( -1 ) : T( +1 );
+		}
+
 	D3DXMATRIX BuildMatrix( const D3DXVECTOR3& position, const D3DXVECTOR3& rotation, const D3DXVECTOR3& scale );
 
 	D3DXVECTOR3 GetPerpendicularVector2d( const D3DXVECTOR3& vector );

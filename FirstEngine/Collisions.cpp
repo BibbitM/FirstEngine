@@ -24,7 +24,8 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 	D3DXVec3Normalize( &direction, &direction );
 
 	// Line is parallel to plane.
-	if( D3DXVec3Dot( &plane.m_normal, &direction ) == 0.0 )
+	float planeDot = D3DXVec3Dot( &plane.m_normal, &direction );
+	if( planeDot == 0.0 )
 	{
 		return false;
 	}
@@ -45,7 +46,7 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 
 	// Fill the result.
 	result.m_position = start + direction * t;
-	result.m_normal = plane.m_normal;
+	result.m_normal = plane.m_normal * Math::Sign( -planeDot );
 
 	return true;
 }
