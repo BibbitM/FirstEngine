@@ -76,4 +76,16 @@ void TestCollisionShape::CreateTestObjects( Level& level )
 		object->SetActorPosition( D3DXVECTOR3( 0.0f, 1.0f, 5.0f ) );
 		object->SetActorScale( D3DXVECTOR3( 1.0f, 1.0f, 1.0f ) );
 	} );
+
+	level.CreateObject< TestCollisionShape >( []( auto object ) {
+		object->SetShape( Collisions::EShape::Aabb );
+		object->SetActorPosition( D3DXVECTOR3( 5.0f, 1.0f, 0.0f ) );
+		object->SetActorScale( D3DXVECTOR3( 2.0f, 2.0f, 2.0f ) );
+	} );
+
+	level.CreateObject< TestCollisionShape >( []( auto object ) {
+		object->SetShape( Collisions::EShape::Aabb );
+		object->SetActorPosition( D3DXVECTOR3( 5.0f, 1.0f, 5.0f ) );
+		object->SetActorScale( D3DXVECTOR3( 4.0f, 1.0f, 2.0f ) );
+	} );
 }
