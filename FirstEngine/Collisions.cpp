@@ -155,10 +155,28 @@ bool Collisions::LineTraceAabb( CollisionResult& result, const D3DXVECTOR3& star
 	return true;
 }
 
-bool Collisions::CheckCollisonSphereSphere( CollisionResult& result, const ShapeSphere& mySphere, const ShapeSphere& otherAabb )
+bool Collisions::CheckCollisonSphereSphere( CollisionResult& result, const ShapeSphere& mySphere, const ShapeSphere& otherSphere )
 {
-	// TODO:
-	return false;
+	D3DXVECTOR3 offset = mySphere.m_center - otherSphere.m_center;
+	float t = D3DXVec3Length( &offset );
+
+	// Spheres are to far away.
+	if( t > mySphere.m_radius + otherSphere.m_radius )
+	{
+		return false;
+	}
+
+	// Sphere is inside other.
+	if( t < otherSphere.m_radius )
+	{
+		return false;
+	}
+
+	// Fill the result.
+	D3DXVec3Normalize( &result.m_normal, &offset );
+	result.m_position = otherSphere.m_center + result.m_normal * t;
+
+	return true;
 }
 
 bool Collisions::CheckCollisonSpherePlane( CollisionResult& result, const ShapeSphere& mySphere, const ShapePlane& otherPlane )

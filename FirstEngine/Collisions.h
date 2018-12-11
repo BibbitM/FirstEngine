@@ -24,7 +24,7 @@ namespace Collisions
 	bool LineTraceAabb( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeAabb& aabb );
 
 	/// Checks collision between two spheres.
-	bool CheckCollisonSphereSphere( CollisionResult& result, const ShapeSphere& mySphere, const ShapeSphere& otherAabb );
+	bool CheckCollisonSphereSphere( CollisionResult& result, const ShapeSphere& mySphere, const ShapeSphere& otherSphere );
 	/// Checks collision between sphere and plane.
 	bool CheckCollisonSpherePlane( CollisionResult& result, const ShapeSphere& mySphere, const ShapePlane& otherPlane );
 	/// Checks collision between sphere and aabb.
