@@ -1,5 +1,6 @@
 #include "Collisions.h"
 #include "CollisionResult.h"
+#include "Math.h"
 #include "ShapeAabb.h"
 #include "ShapePlane.h"
 #include "ShapeSphere.h"
@@ -40,8 +41,43 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 
 bool Collisions::LineTraceSphere( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeSphere& sphere )
 {
-	// TODO:
-	return false;
+	D3DXVECTOR3 direction = end - start;
+	float length = D3DXVec3Length( &direction );
+	D3DXVec3Normalize( &direction, &direction );
+
+	D3DXVECTOR3 toCenter = sphere.m_center - start;
+	float toCenterLenghtSq = D3DXVec3LengthSq( &toCenter );
+
+	float t = D3DXVec3Dot( &direction, &toCenter );
+	float xSq = toCenterLenghtSq - Math::Square( t );
+	float radiusSq = Math::Square( sphere.m_radius );
+
+	// Collision point is to far to sphere center.
+	if( xSq > radiusSq )
+	{
+		return false;
+	}
+
+	float dt = sqrtf( radiusSq - xSq );
+	float t0 = t - dt;
+
+	// Collision point is to far away.
+	if( t0 > length )
+	{
+		return false;
+	}
+
+	// Collision point is behind the trace.
+	if( t0 < 0.0f )
+	{
+		return false;
+	}
+
+	// Fill the result.
+	result.m_position = start + direction * t0;
+	result.m_normal = result.m_position - sphere.m_center;
+
+	return true;
 }
 
 bool Collisions::LineTraceAabb( CollisionResult& result, const D3DXVECTOR3& start, const D3DXVECTOR3& end, const ShapeAabb& aabb )
