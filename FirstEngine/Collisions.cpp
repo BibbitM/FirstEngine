@@ -25,6 +25,12 @@ bool Collisions::LineTracePlane( CollisionResult& result, const D3DXVECTOR3& sta
 		return false;
 	}
 
+	// Collision point is behind the trace.
+	if( t < 0.0f )
+	{
+		return false;
+	}
+
 	// Fill the result.
 	result.m_position = start + direction * t;
 	result.m_normal = plane.m_normal;
