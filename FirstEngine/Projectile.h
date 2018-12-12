@@ -32,10 +32,14 @@ protected:
 
 	bool GetNearestCollision( CollisionResult& collision ) const;
 	bool GetCollisionWithGround( CollisionResult& collision, const ShapeSphere& mySphere ) const;
+	bool GetCollisionWithTerrain( CollisionResult& collision, const ShapeSphere& mySphere ) const;
 	bool GetNearestCollisionWithTestShapes( CollisionResult& collision, const ShapeSphere& mySphere ) const;
 	bool GetCollisionWithTestShape( CollisionResult& collision, const ShapeSphere& mySphere, const TestCollisionShape& shape ) const;
 
 private:
+
+	class NearestCollision;
+
 	float m_radius;
 	float m_lifeTime;
 	float m_gravityFactor;
