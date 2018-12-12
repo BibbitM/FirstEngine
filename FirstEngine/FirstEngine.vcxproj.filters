@@ -137,6 +137,9 @@
     <ClCompile Include="TestCollisionShape.cpp">
       <Filter>Source\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="LevelCollisions.cpp">
+      <Filter>Source\Collisions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -275,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="TestCollisionShape.h">
       <Filter>Source\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCollisions.h">
+      <Filter>Source\Collisions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
