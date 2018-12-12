@@ -140,6 +140,9 @@
     <ClCompile Include="LevelCollisions.cpp">
       <Filter>Source\Collisions</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsCharacter.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -281,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="LevelCollisions.h">
       <Filter>Source\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsCharacter.h">
+      <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

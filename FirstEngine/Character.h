@@ -16,8 +16,8 @@ public:
 
 protected:
 	virtual void OnUpdate( float deltaTime ) override;
+	virtual void UpdateMovement( float deltaTime );
 
-private:
 	D3DXVECTOR3 m_velocity;
 
 	bool m_touchesGround;
