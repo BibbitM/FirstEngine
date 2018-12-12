@@ -145,7 +145,7 @@ void FreeCamera::FireProjectile()
 	// TOOD: 3. Display crosshair showing current accuracy
 	GetLevel()->CreateObject< Projectile >( [ this ]( auto projectile )
 	{
-		projectile->SetRadius( 0.5f );
+		projectile->SetRadius( 0.25f );
 		projectile->SetGravityFactor( 1.0f );
 		projectile->SetLifeTime( 5.0f );
 		projectile->SetActorPosition( m_position );

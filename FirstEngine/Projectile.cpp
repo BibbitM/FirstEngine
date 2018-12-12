@@ -8,8 +8,13 @@
 #include "TestCollisionShape.h"
 #include <algorithm>
 
+// Fix <windows.h> defines
 #ifdef max
 #undef max
+#endif
+
+#ifdef min
+#undef min
 #endif
 
 float Projectile::s_gravity = 10.0f;
@@ -24,11 +29,8 @@ Projectile::Projectile()
 {
 	SetMesh( "Content\\unitsphere.x" );
 	SetColor( 0xFFFF0000 );
-
-	float scale = std::max( m_radius, s_minimalScale );
-	SetActorScale( D3DXVECTOR3( scale, scale, scale ) );
+	SetRadius( m_radius );
 }
-
 
 Projectile::~Projectile() = default;
 
@@ -37,7 +39,7 @@ void Projectile::SetRadius( float radius )
 	m_radius = radius;
 
 	float scale = std::max( m_radius, s_minimalScale );
-	SetActorScale( D3DXVECTOR3( scale, scale, scale ) );
+	SetActorScale( D3DXVECTOR3( scale * 2.0f, scale * 2.0f, scale * 2.0f ) );
 }
 
 ShapeSphere Projectile::GetCollisionSphere() const
