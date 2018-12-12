@@ -198,6 +198,65 @@ bool Collisions::CheckCollisonSpherePlane( CollisionResult& result, const ShapeS
 
 bool Collisions::CheckCollisonSphereAabb( CollisionResult& result, const ShapeSphere& mySphere, const ShapeAabb& otherAabb )
 {
-	// TODO:
-	return false;
+	D3DXVECTOR3 boxToSphere;
+
+	if( otherAabb.m_origin.x - otherAabb.m_halfSize.x > mySphere.m_center.x )
+	{
+		boxToSphere.x = mySphere.m_center.x - otherAabb.m_origin.x + otherAabb.m_halfSize.x;
+	}
+	else if( otherAabb.m_origin.x + otherAabb.m_halfSize.x < mySphere.m_center.x )
+	{
+		boxToSphere.x = mySphere.m_center.x - otherAabb.m_origin.x - otherAabb.m_halfSize.x;
+	}
+	else
+	{
+		boxToSphere.x = 0.0f;
+	}
+
+	if( otherAabb.m_origin.y - otherAabb.m_halfSize.y > mySphere.m_center.y )
+	{
+		boxToSphere.y = mySphere.m_center.y - otherAabb.m_origin.y + otherAabb.m_halfSize.y;
+	}
+	else if( otherAabb.m_origin.y + otherAabb.m_halfSize.y < mySphere.m_center.y )
+	{
+		boxToSphere.y = mySphere.m_center.y - otherAabb.m_origin.y - otherAabb.m_halfSize.y;
+	}
+	else
+	{
+		boxToSphere.y = 0.0f;
+	}
+
+	if( otherAabb.m_origin.z - otherAabb.m_halfSize.z > mySphere.m_center.z )
+	{
+		boxToSphere.z = mySphere.m_center.z - otherAabb.m_origin.z + otherAabb.m_halfSize.z;
+	}
+	else if( otherAabb.m_origin.z + otherAabb.m_halfSize.z < mySphere.m_center.z )
+	{
+		boxToSphere.z = mySphere.m_center.z - otherAabb.m_origin.z - otherAabb.m_halfSize.z;
+	}
+	else
+	{
+		boxToSphere.z = 0.0f;
+	}
+
+	float distane = D3DXVec3Length( &boxToSphere );
+
+	// Sphere is to far away.
+	if( distane > mySphere.m_radius )
+	{
+		return false;
+	}
+
+
+	// Sphere is inside aabb.
+	if( distane == 0.0f  )
+	{
+		return false;
+	}
+
+	// Fill the result.
+	result.m_position = mySphere.m_center - boxToSphere;
+	D3DXVec3Normalize( &result.m_normal, &boxToSphere );
+
+	return true;
 }
