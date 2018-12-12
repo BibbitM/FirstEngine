@@ -174,7 +174,7 @@ bool Collisions::CheckCollisonSphereSphere( CollisionResult& result, const Shape
 
 	// Fill the result.
 	D3DXVec3Normalize( &result.m_normal, &offset );
-	result.m_position = otherSphere.m_center + result.m_normal * t;
+	result.m_position = otherSphere.m_center + result.m_normal * otherSphere.m_radius;
 
 	return true;
 }
