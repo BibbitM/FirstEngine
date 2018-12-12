@@ -8,7 +8,18 @@
 #include "ShapeSphere.h"
 #include "Terrain.h"
 #include "TestCollisionShape.h"
+#include <algorithm>
+#include <cassert>
 #include <d3dx9math.h>
+
+// Fix <windows.h> defines
+#ifdef max
+#undef max
+#endif
+
+#ifdef min
+#undef min
+#endif
 
 
 class LevelCollisions::NearestCollision
@@ -272,4 +283,46 @@ bool LevelCollisions::GetSphereOverlapWithTestShape( CollisionResult& collision,
 	default:
 		return false;
 	}
+}
+
+bool LevelCollisions::GetSphereSweep( CollisionResult& collision, const D3DXVECTOR3& start, D3DXVECTOR3& end, float sphereRadius ) const
+{
+	bool result = false;
+
+	// First check with line trace.
+	if( GetLineTrace( collision, start, end ) )
+	{
+		result |= true;
+		end = collision.m_position;
+	}
+
+	// For radius is 0 do the line trace only.
+	if( sphereRadius <= 0.0f )
+	{
+		return result;
+	}
+
+
+	// Check collision at end position.
+	ShapeSphere sphere;
+	sphere.m_center = end;
+	sphere.m_radius = sphereRadius;
+
+	if( !GetSphereOverlap( collision, sphere ) )
+	{
+		assert( !result );
+		return result;
+	}
+
+	result |= true;
+
+	static const float avoidPenetrationEpsilon = 0.001f;
+
+	// Get the final position;
+	D3DXVECTOR3 toCollision = collision.m_position - end;
+	float penetration = sphereRadius - D3DXVec3Length( &toCollision ) + avoidPenetrationEpsilon;
+
+	end += collision.m_normal * penetration;
+
+	return result;
 }

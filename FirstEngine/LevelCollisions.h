@@ -28,6 +28,9 @@ public:
 	bool GetSphereOverlapWithTestShapes( CollisionResult& collision, const ShapeSphere& sphere ) const;
 	bool GetSphereOverlapWithTestShape( CollisionResult& collision, const ShapeSphere& sphere, const TestCollisionShape& shape ) const;
 
+	/// Check sphere sweep with all colliding objects on the level.
+	bool GetSphereSweep( CollisionResult& collision, const D3DXVECTOR3& start, D3DXVECTOR3& end, float sphereRadius ) const;
+
 private:
 	class NearestCollision;
 
