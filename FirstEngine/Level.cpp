@@ -48,11 +48,11 @@ void Level::StartUp( Game* game )
 
 		//CreateObject< Car >();
 
-		//CreateObject< Tiger >();
+		CreateObject< Tiger >();
 
-		CreateObject< FreeCamera >();
+		//CreateObject< FreeCamera >();
 
-		CreateObject< TestCameraPoint >();
+		//CreateObject< TestCameraPoint >();
 
 		TestCollisionShape::CreateTestObjects( *this );
 	}

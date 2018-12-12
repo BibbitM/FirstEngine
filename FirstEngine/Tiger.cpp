@@ -8,10 +8,10 @@
 
 Tiger::Tiger()
 	: m_camera( nullptr )
-	, m_moveAcceleration( 10.0f )
+	, m_moveAcceleration( 1000.0f )
 	, m_moveDeceleration( 1000000.0f )
 	, m_moveSpeedMax( 10.0f )
-	, m_moveAirControl( 0.1f )
+	, m_moveAirControl( 0.5f )
 	, m_jumpSpeed( 5.0f )
 	, m_jumpGravity( 10.0f )
 	, m_rotationChangeSpeed( Math::Deg2Rad( 180.0f ) )
@@ -20,15 +20,18 @@ Tiger::Tiger()
 	// Setup mesh.
 	SetMesh( "Content\\tiger.x" );
 	SetTexture( "Content\\tiger.bmp" );
-	SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f, 0.0f ) );
+	SetRadius( 1.0f );
+	SetBounceFactor( 0.0f );
+	SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f - 1.0f, 0.0f ) );
 	SetMeshRotation( D3DXVECTOR3( 0.0f, Math::Deg2Rad( 180.0f ), 0.0f ) );
+
 }
 
 Tiger::~Tiger() = default;
 
 void Tiger::OnStartUp()
 {
-	Character::OnStartUp();
+	PhysicsCharacter::OnStartUp();
 
 	m_camera = GetLevel()->CreateObject< GenericCamera >( [this]( auto camera ) {
 		camera->SetTarget( this );
@@ -41,14 +44,14 @@ void Tiger::OnShutDown()
 	m_camera->Destroy();
 	m_camera = nullptr;
 
-	Character::OnShutDown();
+	PhysicsCharacter::OnShutDown();
 }
 
 void Tiger::OnUpdate( float deltaTime )
 {
 	UpdateTiger( deltaTime );
 
-	Character::OnUpdate( deltaTime );
+	PhysicsCharacter::OnUpdate( deltaTime );
 }
 
 void Tiger::UpdateTiger( float deltaTime )

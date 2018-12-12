@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Character.h"
+#include "PhysicsCharacter.h"
 
 class GenericCamera;
 
-class Tiger : public Character
+class Tiger : public PhysicsCharacter
 {
 public:
 	Tiger();
