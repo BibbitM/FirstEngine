@@ -87,7 +87,7 @@ int Application::Run( int widht, int height )
 		m_window.Show();
 
 		MSG msg = {};
-		while( msg.message != WM_QUIT )
+		while( msg.message != WM_QUIT && !game.IsFinished() )
 		{
 			if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
 			{

@@ -29,6 +29,9 @@ public:
 		Must be called periodically. */
 	void Loop();
 
+	/** Check if game is finished. */
+	bool IsFinished() const { return m_isFinished; }
+
 	IRenderer* GetRenderer() const;
 
 	MeshManager* GetMeshManager() const;
@@ -51,4 +54,5 @@ private:
 	std::unique_ptr< TextureManager > m_textureManager;
 	std::unique_ptr< InputManager > m_inputManager;
 	Timer m_timer;
+	bool m_isFinished;
 };

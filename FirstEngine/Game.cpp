@@ -17,6 +17,7 @@ Game::Game()
 	, m_meshManager( std::make_unique< MeshManager >() )
 	, m_textureManager( std::make_unique< TextureManager >() )
 	, m_inputManager( std::make_unique< InputManager >() )
+	, m_isFinished( false )
 {
 	// Do nothing here, @see StartUp.
 }
@@ -61,6 +62,11 @@ void Game::ShutDown()
 
 void Game::Loop()
 {
+	if( GetInputManager()->GetKeyState( VK_ESCAPE ) )
+	{
+		m_isFinished = true;
+	}
+
 	Update();
 
 	Render();
