@@ -40,7 +40,7 @@ public:
 
 	Terrain* GetTerrain() const;
 
-	const std::vector< Object* > GetAllObjects() const { return m_objects; }
+	std::vector< Object* > GetAllObjects() const;
 	template< class TObject >
 	std::vector< TObject* > GetObjectsFromClass() const;
 
@@ -84,6 +84,13 @@ std::vector< TObject* > Level::GetObjectsFromClass() const
 	for ( auto obj : m_objects )
 	{
 		if ( TObject* objFromClass = dynamic_cast< TObject* >( obj ) )
+		{
+			objectsFromClass.push_back( objFromClass );
+		}
+	}
+	for( auto obj : m_registeredObjects )
+	{
+		if( TObject* objFromClass = dynamic_cast< TObject* >( obj ) )
 		{
 			objectsFromClass.push_back( objFromClass );
 		}

@@ -1,15 +1,18 @@
 #include "NavigationManager.h"
 #include "NavigationNode.h"
 
+#include "CollisionResult.h"
 #include "FrameRenderer.h"
 #include "Game.h"
 #include "Level.h"
+#include "LevelCollisions.h"
 #include "Math.h"
 #include "MeshManager.h"
 #include "Texture.h"
 #include "Terrain.h"
 #include <cassert>
 
+const float NavigationManager::s_checkHeight = 1.0f;
 const float NavigationManager::s_maxHeightDiff = 1.0f;
 
 NavigationManager::NavigationManager()
@@ -110,6 +113,13 @@ void NavigationManager::CreateFromTerrain( const Terrain* terrain )
 
 					// Check height difference.
 					if( fabsf( node->GetPosition().y - neighbourNode->GetPosition().y ) > s_maxHeightDiff )
+						continue;
+
+					// Check visibility.
+					CollisionResult collision;
+					D3DXVECTOR3 nodeCheckPosition = node->GetPosition() + Math::s_upVector3 * s_checkHeight;
+					D3DXVECTOR3 neighbourNodeCheckPosition = neighbourNode->GetPosition() + Math::s_upVector3 * s_checkHeight;
+					if( levelCollisions.GetLineTrace( collision, nodeCheckPosition, neighbourNodeCheckPosition ) || levelCollisions.GetLineTrace( collision, neighbourNodeCheckPosition, nodeCheckPosition ) )
 						continue;
 
 					node->AddNeigbour( neighbourNode );

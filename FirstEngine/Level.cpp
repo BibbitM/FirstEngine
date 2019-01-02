@@ -43,8 +43,6 @@ void Level::StartUp( Game* game )
 
 	LoadTerrain();
 
-	m_navigationManager->StartUp( this );
-
 	// TEMP STUFF
 	{
 		GetGame()->GetInputManager()->SetLockCursor( true );
@@ -61,6 +59,10 @@ void Level::StartUp( Game* game )
 		TestCollisionShape::CreateTestObjects( *this );
 	}
 	// TEMP END
+
+	// Do it after all objects are crated.
+	// It checks collisions with all objects.
+	m_navigationManager->StartUp( this );
 }
 
 void Level::ShutDown()
@@ -178,6 +180,18 @@ Terrain* Level::GetTerrain() const
 {
 	assert( m_terrain );
 	return m_terrain;
+}
+
+std::vector< Object* > Level::GetAllObjects() const
+{
+	std::vector< Object* > allObjects;
+
+	allObjects.reserve( m_objects.size() + m_registeredObjects.size() );
+
+	allObjects.insert( allObjects.end(), m_objects.begin(), m_objects.end() );
+	allObjects.insert( allObjects.end(), m_registeredObjects.begin(), m_registeredObjects.end() );
+
+	return allObjects;
 }
 
 void Level::LoadTerrain()
