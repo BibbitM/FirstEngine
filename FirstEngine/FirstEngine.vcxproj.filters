@@ -149,6 +149,9 @@
     <ClCompile Include="NavigationManager.cpp">
       <Filter>Source\Navigation</Filter>
     </ClCompile>
+    <ClCompile Include="NavigationNode.cpp">
+      <Filter>Source\Navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -295,6 +298,9 @@
       <Filter>Source\Objects</Filter>
     </ClInclude>
     <ClInclude Include="NavigationManager.h">
+      <Filter>Source\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationNode.h">
       <Filter>Source\Navigation</Filter>
     </ClInclude>
   </ItemGroup>
