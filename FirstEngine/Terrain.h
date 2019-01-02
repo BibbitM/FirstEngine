@@ -28,6 +28,15 @@ public:
 	int GetX( float x ) const;
 	int GetZ( float z ) const;
 
+	float GetHeight( int index ) const;
+	float GetHeight( int x, int z ) const { return GetHeight( GetIndex( x, z ) ); }
+
+	int GetIndex( float x, float z ) const;
+	int GetIndex( int x, int z ) const;
+
+	D3DXVECTOR3 GetCorner() const;
+	D3DXVECTOR3 GetPosition( int x, int z ) const;
+
 	ShapeAabb GetCollisionShape( int x, int z ) const;
 
 protected:
@@ -39,15 +48,6 @@ private:
 	void LoadFromFile();
 	void LoadResources();
 	void UnloadResources();
-
-	float GetHeight( int index ) const;
-	float GetHeight( int x, int z ) const { return GetHeight( GetIndex( x, z ) ); }
-
-	int GetIndex( float x, float z ) const;
-	int GetIndex( int x, int z ) const;
-
-	D3DXVECTOR3 GetCorner() const;
-	D3DXVECTOR3 GetPosition( int x, int z ) const;
 
 	static D3DXCOLOR GetColorForHeight( float height );
 

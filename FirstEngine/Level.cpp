@@ -122,6 +122,8 @@ void Level::Render( FrameRenderer& frame ) const
 {
 	m_cameraManager->Render();
 
+	m_navigationManager->Render( frame );
+
 	for( Object* object : m_objects )
 	{
 		if( object )
