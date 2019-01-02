@@ -190,6 +190,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="NavigationManager.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="PhysicsCharacter.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="FrameRenderer.h" />
     <ClInclude Include="LevelCollisions.h" />
+    <ClInclude Include="NavigationManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="PhysicsCharacter.h" />

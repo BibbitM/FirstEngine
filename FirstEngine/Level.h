@@ -7,6 +7,7 @@
 class CameraManager;
 class FrameRenderer;
 class Game;
+class NavigationManager;
 class Object;
 class Terrain;
 
@@ -35,6 +36,7 @@ public:
 
 	Game* GetGame() const;
 	CameraManager* GetCameraManager() const;
+	NavigationManager* GetNavigationManager() const;
 
 	Terrain* GetTerrain() const;
 
@@ -48,6 +50,8 @@ private:
 	Game* m_game;
 
 	std::unique_ptr< CameraManager > m_cameraManager;
+
+	std::unique_ptr< NavigationManager > m_navigationManager;
 
 	std::vector< Object* > m_objects;
 	std::vector< Object* > m_registeredObjects;

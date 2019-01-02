@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "CameraManager.h"
+#include "NavigationManager.h"
 #include "Object.h"
 #include "Terrain.h"
 #include <algorithm>
@@ -19,6 +20,7 @@
 Level::Level()
 	: m_game( nullptr )
 	, m_cameraManager( std::make_unique< CameraManager >() )
+	, m_navigationManager( std::make_unique< NavigationManager >() )
 	, m_terrain( nullptr )
 {
 }
@@ -40,6 +42,8 @@ void Level::StartUp( Game* game )
 	m_cameraManager->StartUp( this );
 
 	LoadTerrain();
+
+	m_navigationManager->StartUp( this );
 
 	// TEMP STUFF
 	{
@@ -79,6 +83,8 @@ void Level::ShutDown()
 	}
 
 	m_terrain = nullptr;
+
+	m_navigationManager->ShutDown();
 
 	m_cameraManager->ShutDown();
 

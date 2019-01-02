@@ -36,6 +36,9 @@
     <Filter Include="Source\Collisions">
       <UniqueIdentifier>{0a3a82fe-be77-4d2c-b9cc-59fc34cf81fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Navigation">
+      <UniqueIdentifier>{6e5df2e0-83c1-4ec9-9d5e-0644b4a78e8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="PhysicsCharacter.cpp">
       <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationManager.cpp">
+      <Filter>Source\Navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsCharacter.h">
       <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationManager.h">
+      <Filter>Source\Navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
