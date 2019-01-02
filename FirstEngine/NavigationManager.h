@@ -31,5 +31,8 @@ private:
 	std::vector< std::unique_ptr< NavigationNode > > m_nodesGrid;
 
 	Mesh m_boxMesh;
-	Mesh m_shpereMesh;
+	Mesh m_sphereMesh;
+
+	static const float s_checkHeight;
+	static const float s_maxHeightDiff;
 };
