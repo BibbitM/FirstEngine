@@ -116,6 +116,23 @@ void Level::Update( float deltaTime )
 		}
 	}
 
+	// DEBUG STUFF
+	{
+		static int counter = 0;
+		static D3DXVECTOR3 lastTigerPosition( 0.0f, 0.0f, 0.0f );
+		if( counter++ % 100 == 0 )
+		{
+			const Tiger* tiger = GetObjectsFromClass< Tiger >()[ 0 ];
+			D3DXVECTOR3 tigerPosition = tiger->GetActorPosition();
+
+			std::vector< D3DXVECTOR3> path = m_navigationManager->FindPath( tigerPosition, lastTigerPosition );
+
+			lastTigerPosition = tigerPosition;
+		}
+
+	}
+	// DEBUG END
+
 	// Remove all nullptr.
 	m_objects.erase( std::remove( m_objects.begin(), m_objects.end(), nullptr ), m_objects.end() );
 }

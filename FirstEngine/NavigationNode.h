@@ -11,7 +11,7 @@ public:
 	void SetPosition( const D3DXVECTOR3& position ) { m_position = position; }
 	const D3DXVECTOR3& GetPosition() const { return m_position; }
 
-	void AddNeigbour( const NavigationNode* neightbour );
+	void AddNeigbour( const NavigationNode& neightbour );
 	const std::vector< const NavigationNode* > GetNeightbours() const { return m_neighbours; }
 
 private:

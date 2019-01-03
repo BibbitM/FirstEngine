@@ -6,10 +6,9 @@ NavigationNode::NavigationNode()
 {
 }
 
-void NavigationNode::AddNeigbour( const NavigationNode* neightbour )
+void NavigationNode::AddNeigbour( const NavigationNode& neightbour )
 {
-	assert( neightbour );
-	m_neighbours.push_back( neightbour );
+	m_neighbours.push_back( &neightbour );
 }
 
 float CalculateDistance( const NavigationNode& first, const NavigationNode& second )
