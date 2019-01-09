@@ -7,6 +7,7 @@
 class CameraManager;
 class FrameRenderer;
 class Game;
+class GameMode;
 class NavigationManager;
 class Object;
 class Terrain;
@@ -39,6 +40,7 @@ public:
 	NavigationManager* GetNavigationManager() const;
 
 	Terrain* GetTerrain() const;
+	GameMode* GetGameMode() const;
 
 	std::vector< Object* > GetAllObjects() const;
 	template< class TObject >
@@ -58,6 +60,7 @@ private:
 
 	// Game specific objects;
 	Terrain* m_terrain;
+	GameMode* m_gameMode;
 };
 
 template< class TObject >

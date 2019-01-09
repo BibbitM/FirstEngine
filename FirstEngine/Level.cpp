@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "CameraManager.h"
+#include "GameMode.h"
 #include "NavigationManager.h"
 #include "Object.h"
 #include "Terrain.h"
@@ -27,6 +28,7 @@ Level::Level()
 	, m_cameraManager( std::make_unique< CameraManager >() )
 	, m_navigationManager( std::make_unique< NavigationManager >() )
 	, m_terrain( nullptr )
+	, m_gameMode( nullptr )
 {
 }
 
@@ -36,6 +38,7 @@ Level::~Level()
 	assert( m_objects.empty() );
 	assert( m_registeredObjects.empty() );
 	assert( !m_terrain );
+	assert( !m_gameMode );
 }
 
 void Level::StartUp( Game* game )
@@ -47,6 +50,7 @@ void Level::StartUp( Game* game )
 	m_cameraManager->StartUp( this );
 
 	LoadTerrain();
+	m_gameMode = CreateObject< GameMode >();
 
 	// TEMP STUFF
 	{
@@ -57,13 +61,13 @@ void Level::StartUp( Game* game )
 
 		//CreateObject< Tiger >();
 
-		CreateObject< PacMan >();
+		// CreateObject< PacMan >();
 
 		//CreateObject< FreeCamera >();
 
 		//CreateObject< TestCameraPoint >();
 
-		TestCollisionShape::CreateTestObjects( *this );
+		//TestCollisionShape::CreateTestObjects( *this );
 	}
 	// TEMP END
 
@@ -91,6 +95,8 @@ void Level::ShutDown()
 		m_registeredObjects.front()->Destroy();
 	}
 
+	// Game objects are destroyed with m_objects.
+	m_gameMode = nullptr;
 	m_terrain = nullptr;
 
 	m_navigationManager->ShutDown();
@@ -127,17 +133,17 @@ void Level::Update( float deltaTime )
 	if( s_debugNavigationManager )
 	{
 		static int counter = 0;
-		static D3DXVECTOR3 lastTigerPosition( 0.0f, 0.0f, 0.0f );
+		static D3DXVECTOR3 lastPlayerPosition( 0.0f, 0.0f, 0.0f );
 		if( counter++ % 100 == 0 )
 		{
-			const Tiger* tiger = GetObjectsFromClass< Tiger >()[ 0 ];
-			if( tiger )
+			const Actor* player = GetGameMode()->GetPlayer();
+			if( player )
 			{
-				D3DXVECTOR3 tigerPosition = tiger->GetActorPosition();
+				D3DXVECTOR3 playerPosition = player->GetActorPosition();
 
-				std::vector< D3DXVECTOR3 > path = m_navigationManager->FindPath( tigerPosition, lastTigerPosition );
+				std::vector< D3DXVECTOR3 > path = m_navigationManager->FindPath( playerPosition, lastPlayerPosition );
 
-				lastTigerPosition = tigerPosition;
+				lastPlayerPosition = playerPosition;
 			}
 		}
 	}
@@ -210,6 +216,12 @@ Terrain* Level::GetTerrain() const
 {
 	assert( m_terrain );
 	return m_terrain;
+}
+
+GameMode* Level::GetGameMode() const
+{
+	assert( m_gameMode );
+	return m_gameMode;
 }
 
 std::vector< Object* > Level::GetAllObjects() const
