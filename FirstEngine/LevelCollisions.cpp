@@ -310,7 +310,7 @@ bool LevelCollisions::GetSphereSweep( CollisionResult& collision, const D3DXVECT
 
 	if( !GetSphereOverlap( collision, sphere ) )
 	{
-		assert( !result );
+		//assert( !result );
 		return result;
 	}
 

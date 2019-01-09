@@ -1,5 +1,7 @@
 #include "GameMode.h"
+#include "CollisionResult.h"
 #include "Level.h"
+#include "LevelCollisions.h"
 #include "PacMan.h"
 #include <cassert>
 
@@ -18,7 +20,17 @@ void GameMode::OnStartUp()
 	Object::OnStartUp();
 
 	assert( !m_player );
-	m_player = GetLevel()->CreateObject< PacMan >();
+	m_player = GetLevel()->CreateObject< PacMan >( [ this ]( auto pacMan )
+	{
+		LevelCollisions levelCollisions( *GetLevel() );
+
+		CollisionResult collision;
+		D3DXVECTOR3 pacManPosition = pacMan->GetActorPosition();
+		if( levelCollisions.GetSphereSweep( collision, pacManPosition + D3DXVECTOR3( 0.0f, 100.0f, 0.0f ), pacManPosition, pacMan->GetRadius() ) )
+		{
+			pacMan->SetActorPosition( pacManPosition );
+		}
+	} );
 }
 
 void GameMode::OnShutDown()
