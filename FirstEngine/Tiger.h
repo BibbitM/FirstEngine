@@ -17,16 +17,8 @@ protected:
 	virtual void OnUpdate( float deltaTime ) override;
 
 private:
-	struct Input
-	{
-		float moveForward;
-		float moveRight;
-		float rotation;
-		bool jump;
-	};
-
 	void UpdateTiger( float deltaTime );
-	Input GetInput();
+	float UpdateInput();
 	void UpdateRotation( float rotationInput, float deltaTime );
 
 	GenericCamera* m_camera;

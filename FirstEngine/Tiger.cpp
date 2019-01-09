@@ -50,16 +50,16 @@ void Tiger::OnUpdate( float deltaTime )
 
 void Tiger::UpdateTiger( float deltaTime )
 {
-	Input input = GetInput();
+	float rotationInput = UpdateInput();
 
-	UpdateRotation( input.rotation, deltaTime );
+	UpdateRotation( rotationInput, deltaTime );
 }
 
-Tiger::Input Tiger::GetInput()
+float Tiger::UpdateInput()
 {
 	const InputManager* inputMgr = GetLevel()->GetGame()->GetInputManager();
 
-	Input input = {};
+	float rotationInput = 0.0f;
 
 
 	if( inputMgr->IsKeyPressed( 'W' ) )
@@ -82,23 +82,23 @@ Tiger::Input Tiger::GetInput()
 	}
 
 
-	if( inputMgr->IsKeyPressed( 'A' ) )
-	{
-		input.rotation -= 1.0f;
-	}
-	if( inputMgr->IsKeyPressed( 'D' ) )
-	{
-		input.rotation += 1.0f;
-	}
-
-
 	if( inputMgr->IsKeyJustPressed( VK_SPACE ) )
 	{
 		AddJumpInput();
 	}
 
 
-	return input;
+	if( inputMgr->IsKeyPressed( 'A' ) )
+	{
+		rotationInput -= 1.0f;
+	}
+	if( inputMgr->IsKeyPressed( 'D' ) )
+	{
+		rotationInput += 1.0f;
+	}
+
+
+	return rotationInput;
 }
 
 void Tiger::UpdateRotation( float rotationInput, float deltaTime )
