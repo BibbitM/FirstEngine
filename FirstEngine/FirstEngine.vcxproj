@@ -176,6 +176,7 @@
     <ClCompile Include="CollisionResult.cpp" />
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="FreeCamera.cpp" />
+    <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="GenericCamera.cpp" />
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="CollisionResult.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="FreeCamera.h" />
+    <ClInclude Include="GameMode.h" />
     <ClInclude Include="GenericCamera.h" />
     <ClInclude Include="Car.h" />
     <ClInclude Include="Character.h" />

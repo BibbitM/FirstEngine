@@ -152,6 +152,9 @@
     <ClCompile Include="NavigationNode.cpp">
       <Filter>Source\Navigation</Filter>
     </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -302,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="NavigationNode.h">
       <Filter>Source\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>Source\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
