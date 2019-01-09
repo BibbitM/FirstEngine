@@ -194,6 +194,7 @@
     <ClCompile Include="NavigationManager.cpp" />
     <ClCompile Include="NavigationNode.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PacMan.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="PhysicsCharacter.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="NavigationManager.h" />
     <ClInclude Include="NavigationNode.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PacMan.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="PhysicsCharacter.h" />
     <ClInclude Include="Projectile.h" />

@@ -11,6 +11,7 @@
 #include "Game.h"
 #include "FreeCamera.h"
 #include "InputManager.h"
+#include "PacMan.h"
 #include "TestCameraPoint.h"
 #include "TestCollisionShape.h"
 #include "Tiger.h"
@@ -54,7 +55,9 @@ void Level::StartUp( Game* game )
 
 		//CreateObject< Car >();
 
-		CreateObject< Tiger >();
+		//CreateObject< Tiger >();
+
+		CreateObject< PacMan >();
 
 		//CreateObject< FreeCamera >();
 

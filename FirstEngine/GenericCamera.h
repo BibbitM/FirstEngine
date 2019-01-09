@@ -15,6 +15,7 @@ public:
 
 	void SetTarget( const Actor* target );
 
+	D3DXVECTOR3 GetCameraDirection() const;
 	D3DXVECTOR3 GetTargetPosition() const;
 
 protected:
@@ -37,7 +38,6 @@ private:
 	void StoreTargetPosition();
 
 	void SetCamera();
-	D3DXVECTOR3 GetCameraDirection() const;
 
 	const Actor* m_target;
 

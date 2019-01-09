@@ -155,6 +155,9 @@
     <ClCompile Include="GameMode.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="PacMan.cpp">
+      <Filter>Source\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="PlayGames.ico">
@@ -308,6 +311,9 @@
     </ClInclude>
     <ClInclude Include="GameMode.h">
       <Filter>Source\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PacMan.h">
+      <Filter>Source\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

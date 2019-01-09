@@ -18,10 +18,12 @@ Tiger::Tiger()
 	SetBounceFactor( 0.0f );
 	SetMeshPosition( D3DXVECTOR3( 0.0f, 0.75f - 1.0f, 0.0f ) );
 	SetMeshRotation( D3DXVECTOR3( 0.0f, Math::Deg2Rad( 180.0f ), 0.0f ) );
-
 }
 
-Tiger::~Tiger() = default;
+Tiger::~Tiger()
+{
+	assert( !m_camera );
+}
 
 void Tiger::OnStartUp()
 {

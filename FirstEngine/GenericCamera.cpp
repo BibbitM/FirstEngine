@@ -33,6 +33,15 @@ void GenericCamera::SetTarget( const Actor* target )
 	m_previousTargetPositionSet = false;
 }
 
+D3DXVECTOR3 GenericCamera::GetCameraDirection() const
+{
+	D3DXMATRIX matCamera;
+	D3DXMatrixRotationYawPitchRoll( &matCamera, Math::Deg2Rad( m_yaw ), Math::Deg2Rad( m_pitch ), 0.0f );
+	D3DXVECTOR3 direction;
+	D3DXVec3TransformNormal( &direction, &Math::s_forwardVector3, &matCamera );
+	return direction;
+}
+
 D3DXVECTOR3 GenericCamera::GetTargetPosition() const
 {
 	if (m_target)
@@ -166,13 +175,4 @@ void GenericCamera::SetCamera()
 
 	CameraManager* cameraManger = GetLevel()->GetCameraManager();
 	cameraManger->SetPositionDirection( position, direction );
-}
-
-D3DXVECTOR3 GenericCamera::GetCameraDirection() const
-{
-	D3DXMATRIX matCamera;
-	D3DXMatrixRotationYawPitchRoll( &matCamera, Math::Deg2Rad( m_yaw ), Math::Deg2Rad( m_pitch ), 0.0f );
-	D3DXVECTOR3 direction;
-	D3DXVec3TransformNormal( &direction, &Math::s_forwardVector3, &matCamera );
-	return direction;
 }
