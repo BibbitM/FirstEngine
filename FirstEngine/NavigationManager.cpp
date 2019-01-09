@@ -14,8 +14,8 @@
 #include <algorithm>
 #include <cassert>
 
-const float NavigationManager::s_checkHeight = 1.0f;
-const float NavigationManager::s_maxHeightDiff = 1.0f;
+const float NavigationManager::s_checkHeight = 0.5f;
+const float NavigationManager::s_maxHeightDiff = 0.5f;
 
 NavigationManager::NavigationManager()
 	: m_level( nullptr )
