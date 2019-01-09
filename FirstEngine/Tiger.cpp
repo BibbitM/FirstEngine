@@ -8,12 +8,6 @@
 
 Tiger::Tiger()
 	: m_camera( nullptr )
-	, m_moveAcceleration( 1000.0f )
-	, m_moveDeceleration( 1000000.0f )
-	, m_moveSpeedMax( 10.0f )
-	, m_moveAirControl( 0.1f )
-	, m_jumpSpeed( 5.0f )
-	, m_jumpGravity( 10.0f )
 	, m_rotationChangeSpeed( Math::Deg2Rad( 180.0f ) )
 	, m_rotationAirControl( 0.5f )
 {
@@ -59,11 +53,9 @@ void Tiger::UpdateTiger( float deltaTime )
 	Input input = GetInput();
 
 	UpdateRotation( input.rotation, deltaTime );
-
-	UpdateMovement( input.moveForward, input.moveRight, input.jump, deltaTime );
 }
 
-Tiger::Input Tiger::GetInput() const
+Tiger::Input Tiger::GetInput()
 {
 	const InputManager* inputMgr = GetLevel()->GetGame()->GetInputManager();
 
@@ -72,21 +64,21 @@ Tiger::Input Tiger::GetInput() const
 
 	if( inputMgr->IsKeyPressed( 'W' ) )
 	{
-		input.moveForward += 1.0f;
+		AddMovementInput( GetActorWorldForwardVector() );
 	}
 	if( inputMgr->IsKeyPressed( 'S' ) )
 	{
-		input.moveForward -= 1.0f;
+		AddMovementInput( -GetActorWorldForwardVector() );
 	}
 
 
 	if( inputMgr->IsKeyPressed( 'E' ) )
 	{
-		input.moveRight += 1.0f;
+		AddMovementInput( GetActorWorldRightVector() );
 	}
 	if( inputMgr->IsKeyPressed( 'Q' ) )
 	{
-		input.moveRight -= 1.0f;
+		AddMovementInput( -GetActorWorldRightVector() );
 	}
 
 
@@ -102,86 +94,11 @@ Tiger::Input Tiger::GetInput() const
 
 	if( inputMgr->IsKeyJustPressed( VK_SPACE ) )
 	{
-		input.jump = true;
+		AddJumpInput();
 	}
 
 
 	return input;
-}
-
-void Tiger::UpdateMovement( float moveForwardInput, float moveRightInput, bool jumpInput, float deltaTime )
-{
-	D3DXVECTOR3 velocity = GetVelocity();
-	// Extract y (up/down) velocity to be calculated separately.
-	float velocityY = velocity.y;
-	velocity.y = 0.0f;
-
-
-	// Calculate 2D velocity (x, z).
-
-	const float controlFactor = GetTouchesGround() ? 1.0f : m_moveAirControl;
-
-	if( moveForwardInput == 0.0f && moveRightInput == 0.0f )
-	{
-		float speed = D3DXVec3Length( &velocity );
-		speed = Math::InterpolateTo( speed, 0.0f, deltaTime, m_moveDeceleration * controlFactor );
-		if( speed <= 0.0f )
-		{
-			velocity = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
-		}
-		else
-		{
-			D3DXVec3Normalize( &velocity, &velocity );
-			velocity *= speed;
-		}
-	}
-	else
-	{
-		D3DXVECTOR3 velocityChangeInput( 0.0f, 0.0f, 0.0f );
-		velocityChangeInput += GetActorWorldForwardVector() * moveForwardInput;
-		velocityChangeInput += GetActorWorldRightVector() * moveRightInput;
-
-		float speedInput = D3DXVec3Length( &velocityChangeInput );
-
-		D3DXVec3Normalize( &velocityChangeInput, &velocityChangeInput );
-		D3DXVECTOR3 velocityPendicularInput = Math::GetPerpendicularVector2d( velocityChangeInput );
-
-		float forwardSpeed = D3DXVec3Dot( &velocity, &velocityChangeInput );
-		float sideSpeed = D3DXVec3Dot( &velocity, &velocityPendicularInput );
-
-		forwardSpeed += speedInput * m_moveAcceleration * controlFactor * deltaTime;
-		sideSpeed = Math::InterpolateTo( sideSpeed, 0.0f, deltaTime, m_moveDeceleration );
-
-		velocity = velocityChangeInput * forwardSpeed + velocityPendicularInput * sideSpeed;
-	
-
-		if( m_moveSpeedMax > 0.0f && D3DXVec3Length( &velocity ) > m_moveSpeedMax )
-		{
-			D3DXVec3Normalize( &velocity, &velocity );
-			velocity *= m_moveSpeedMax;
-		}
-	}
-
-
-	// Calculate up/down velocity (y).
-
-	if( GetTouchesGround() )
-	{
-		velocityY = 0.0f;
-	}
-
-	if( GetTouchesGround() && jumpInput )
-	{
-		velocityY += m_jumpSpeed;
-	}
-	else
-	{
-		velocityY -= m_jumpGravity * deltaTime;
-	}
-
-
-	velocity.y = velocityY;
-	SetVelocity( velocity );
 }
 
 void Tiger::UpdateRotation( float rotationInput, float deltaTime )

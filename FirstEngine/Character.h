@@ -16,7 +16,7 @@ public:
 
 protected:
 	virtual void OnUpdate( float deltaTime ) override;
-	virtual void UpdateMovement( float deltaTime );
+	virtual void UpdateActorPosition( float deltaTime );
 
 	D3DXVECTOR3 m_velocity;
 

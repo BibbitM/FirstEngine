@@ -14,10 +14,10 @@ void Character::OnUpdate( float deltaTime )
 {
 	Pawn::OnUpdate( deltaTime );
 
-	UpdateMovement( deltaTime );
+	UpdateActorPosition( deltaTime );
 }
 
-void Character::UpdateMovement( float deltaTime )
+void Character::UpdateActorPosition( float deltaTime )
 {
 	D3DXVECTOR3 position = GetActorPosition();
 	position += m_velocity * deltaTime;

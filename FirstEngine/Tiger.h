@@ -26,19 +26,10 @@ private:
 	};
 
 	void UpdateTiger( float deltaTime );
-	Input GetInput() const;
-	void UpdateMovement( float moveForwardInput, float moveRightInput, bool jumpInput, float deltaTime );
+	Input GetInput();
 	void UpdateRotation( float rotationInput, float deltaTime );
 
 	GenericCamera* m_camera;
-
-	float m_moveAcceleration;
-	float m_moveDeceleration;
-	float m_moveSpeedMax;
-	float m_moveAirControl;
-
-	float m_jumpSpeed;
-	float m_jumpGravity;
 
 	float m_rotationChangeSpeed;
 	float m_rotationAirControl;
