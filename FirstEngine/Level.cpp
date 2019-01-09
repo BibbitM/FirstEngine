@@ -16,6 +16,10 @@
 #include "Tiger.h"
 // TEMP END
 
+namespace
+{
+	bool s_debugNavigationManager = false;
+}
 
 Level::Level()
 	: m_game( nullptr )
@@ -117,19 +121,22 @@ void Level::Update( float deltaTime )
 	}
 
 	// DEBUG STUFF
+	if( s_debugNavigationManager )
 	{
 		static int counter = 0;
 		static D3DXVECTOR3 lastTigerPosition( 0.0f, 0.0f, 0.0f );
 		if( counter++ % 100 == 0 )
 		{
 			const Tiger* tiger = GetObjectsFromClass< Tiger >()[ 0 ];
-			D3DXVECTOR3 tigerPosition = tiger->GetActorPosition();
+			if( tiger )
+			{
+				D3DXVECTOR3 tigerPosition = tiger->GetActorPosition();
 
-			std::vector< D3DXVECTOR3> path = m_navigationManager->FindPath( tigerPosition, lastTigerPosition );
+				std::vector< D3DXVECTOR3 > path = m_navigationManager->FindPath( tigerPosition, lastTigerPosition );
 
-			lastTigerPosition = tigerPosition;
+				lastTigerPosition = tigerPosition;
+			}
 		}
-
 	}
 	// DEBUG END
 
@@ -141,7 +148,10 @@ void Level::Render( FrameRenderer& frame ) const
 {
 	m_cameraManager->Render();
 
-	m_navigationManager->Render( frame );
+	if( s_debugNavigationManager )
+	{
+		m_navigationManager->Render( frame );
+	}
 
 	for( Object* object : m_objects )
 	{
